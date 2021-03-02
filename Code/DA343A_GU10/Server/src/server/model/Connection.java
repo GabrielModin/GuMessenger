@@ -49,7 +49,6 @@ public class Connection {
         @Override
         public void run() {
             try{
-
                 while (true){
                     outputStream.flush();
                     return;
@@ -74,10 +73,9 @@ public class Connection {
                 }
 
                 while (true){
-                    System.out.println(socket.isClosed());
                     Object newMessage = inputStream.readObject();
                     if (newMessage instanceof Message){
-                        connectionManager.messageReceived((Message) newMessage);
+                        System.out.println("nice");
                     }
                 }
 

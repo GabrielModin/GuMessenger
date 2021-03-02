@@ -1,9 +1,10 @@
 package shared;
 
 import javax.swing.*;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable {
     private ImageIcon img;
     private String message;
     private Date timestamp;

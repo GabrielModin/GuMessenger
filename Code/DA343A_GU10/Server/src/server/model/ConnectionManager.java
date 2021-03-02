@@ -16,17 +16,11 @@ public class ConnectionManager extends Thread {
     public ConnectionManager(int port) {
         connections = new HashMap<>();
         try {
-            System.out.println("Server : starting server");
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
         }
         start();
-    }
-
-    public void messageReceived(Message message){
-
-
     }
 
     @Override
@@ -35,11 +29,10 @@ public class ConnectionManager extends Thread {
             while (true) {
 
                 Socket socket = serverSocket.accept();
-
                 Connection connection = new Connection(socket, this);
-
                 ClientHandler clientHandler = new ClientHandler(connection);
                 clientHandler.start();
+
             }
         }catch (IOException e){
             e.printStackTrace();

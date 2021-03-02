@@ -38,6 +38,9 @@ public class Connection {
 
                 oos.writeObject(testUser);
                 oos.flush();
+
+                oos.writeObject(new Message(null,null,null,null,null));
+                oos.flush();
 //                while(true) {
 //                    shared.User testRecieve = new shared.User("Gabbe", null);
 //                    shared.Message msgToSend = new shared.Message(testUser, testRecieve, new Date());
