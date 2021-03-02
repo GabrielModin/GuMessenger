@@ -1,4 +1,4 @@
-package server.boundary.connection;
+package server.model;
 
 import java.io.*;
 import java.net.Socket;

@@ -1,4 +1,4 @@
-package client.boundary.connection;
+package client.model;
 
 import shared.Message;
 import shared.User;
