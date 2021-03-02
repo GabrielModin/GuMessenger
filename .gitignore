@@ -17,10 +17,6 @@
 .idea/tasks.xml
 .idea/shelf
 
-# Fucks with maven
-.idea/modules.xml
-.idea/libraries/*.xml
-
 #Libraries
 .idea/libraries
 
