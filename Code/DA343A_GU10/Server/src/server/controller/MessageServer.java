@@ -1,6 +1,6 @@
 package server.controller;
 
-import server.boundary.connection.ConnectionManager;
+import server.model.ConnectionManager;
 
 public class MessageServer {
 

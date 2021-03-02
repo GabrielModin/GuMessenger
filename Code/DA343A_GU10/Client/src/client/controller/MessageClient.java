@@ -1,7 +1,6 @@
 package client.controller;
 
 import client.model.*;
-import client.boundary.connection.*;
 
 import java.io.IOException;
 
