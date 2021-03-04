@@ -2,7 +2,6 @@ package client.model;
 
 import shared.Message;
 import shared.User;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -76,11 +75,12 @@ public class Connection {
                     //någon metod för att visa i UI;
                 }
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
         }
+    }
+
+    public void disconnect() throws IOException {
+        socket.close();
     }
 }
