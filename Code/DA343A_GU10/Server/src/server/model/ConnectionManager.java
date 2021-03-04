@@ -1,6 +1,5 @@
 package server.model;
 
-import shared.Message;
 import shared.User;
 
 import java.io.*;
@@ -11,16 +10,24 @@ import java.util.HashMap;
 public class ConnectionManager extends Thread {
 
     private ServerSocket serverSocket;
-    private HashMap<String, User> connections;
+    ConnectionListener connectionListener;
+    MessageListener messageListener;
+
 
     public ConnectionManager(int port) {
-        connections = new HashMap<>();
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
         }
         start();
+    }
+
+    public void registerMessageListener(MessageListener listener){
+        this.messageListener = listener;
+    }
+    public void registerConnectionListener(ConnectionListener listener){
+        this.connectionListener = listener;
     }
 
     @Override
@@ -30,8 +37,8 @@ public class ConnectionManager extends Thread {
 
                 Socket socket = serverSocket.accept();
                 Connection connection = new Connection(socket, this);
-                ClientHandler clientHandler = new ClientHandler(connection);
-                clientHandler.start();
+                ClientAuthenticator clientAuthenticator = new ClientAuthenticator(connection);
+                clientAuthenticator.start();
 
             }
         }catch (IOException e){
@@ -39,23 +46,19 @@ public class ConnectionManager extends Thread {
         }
     }
 
-    private class ClientHandler extends Thread{
+    private class ClientAuthenticator extends Thread{
 
         private Connection connection;
 
-        public ClientHandler(Connection connection) {
+        public ClientAuthenticator(Connection connection) {
             this.connection = connection;
         }
 
         @Override
         public void run(){
             try {
-
                 User user = connection.getUser();
-                connections.put(user.getName(), user);
-                User test = connections.get(user.getName());
-                System.out.println(test.getName());
-
+                connectionListener.newConnection(user, connection);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
