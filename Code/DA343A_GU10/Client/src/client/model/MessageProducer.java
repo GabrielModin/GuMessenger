@@ -13,14 +13,14 @@ public class MessageProducer {
     }
 
     public Message getMessage(String msg, ImageIcon img, User sender, User[] receivers){
-        return new Message(msg, img, sender, receivers, new Date());
+        return new Message(msg, img, sender, receivers);
     }
 
     public Message getMessage(String msg, User sender, User[] receivers){
-        return new Message(msg, sender, receivers, new Date());
+        return new Message(msg, sender, receivers);
     }
 
     public Message getMessage(ImageIcon img, User sender, User[] receivers){
-        return new Message(img, sender, receivers, new Date());
+        return new Message(img, sender, receivers);
     }
 }

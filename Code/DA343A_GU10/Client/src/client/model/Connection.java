@@ -38,9 +38,6 @@ public class Connection {
                 oos.writeObject(testUser);
                 oos.flush();
 
-                oos.writeObject(new Message(null,null,null,null,null));
-                oos.flush();
-
                 while (true){
                     messageBuffer.get();
                 }
@@ -68,7 +65,7 @@ public class Connection {
 
                 while (true) {
                     Message msgReceived = (Message) ois.readObject();
-                    System.out.println(msgReceived.getMessage());
+                    System.out.println(msgReceived.getMessage() + " " + msgReceived.getTimestamp());
                     //någon metod för att visa i UI;
                 }
 

@@ -5,33 +5,35 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Message implements Serializable {
-    private ImageIcon img;
-    private String message;
-    private Date timestamp;
-    private User sender;
+    private ImageIcon img = null;
+    private String message = null;
+    private Date timestamp = new Date();
+    private User sender = null;
     private User[] receivers;
 
-    private Message(User sender, User[] receivers, Date timestamp){
+    private Message(User sender, User[] receivers){
         this.sender = sender;
         this.receivers = receivers;
-        this.timestamp = timestamp;
     }
-    public Message(String message, ImageIcon img, User sender, User[] receivers, Date timestamp){
-        this(sender, receivers, timestamp);
+    public Message(String message, ImageIcon img, User sender, User[] receivers){
+        this(sender, receivers);
         this.message = message;
         this.img = img;
     }
 
-    public Message(String message, User sender, User[] receivers, Date timestamp){
-        this(sender, receivers, timestamp);
+    public Message(String message, User sender, User[] receivers){
+        this(sender, receivers);
         this.message = message;
         this.img = null;
     }
 
-    public Message(ImageIcon img, User sender, User[] receivers, Date timestamp){
-        this(sender, receivers, timestamp);
+    public Message(ImageIcon img, User sender, User[] receivers){
+        this(sender, receivers);
         this.img = img;
         this.message = null;
+    }
+    public Message(User[] receivers){
+        this(null, receivers);
     }
 
 
