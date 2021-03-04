@@ -11,9 +11,7 @@ public class Connection {
     private ObjectInputStream inputStream;
 
     private Socket socket;
-    private User user = null;
     private ConnectionManager connectionManager;
-
 
     Connection(Socket socket, ConnectionManager connectionManager){
         this.socket = socket;
@@ -33,15 +31,8 @@ public class Connection {
         receive.start();
     }
 
-    public synchronized User getUser() throws InterruptedException {
-        if(user == null){
-            wait();
-        }
-        return user;
-    }
-    public synchronized void setUser(User user){
-        this.user = user;
-        notifyAll();
+    public Connection getConnection(){
+        return this;
     }
 
     class Send extends Thread{
@@ -64,17 +55,19 @@ public class Connection {
         @Override
         public void run() {
             try{
-                Object userLogin = inputStream.readObject();
-                if (userLogin instanceof User){
-                    setUser((User) userLogin);
+
+                Object object = inputStream.readObject();
+                if (object instanceof User){
+                    User user = (User) object;
+                    connectionManager.connectionReceived(user , getConnection());
                 } else {
                     System.out.println("Object received from user not instance of User");
                 }
 
                 while (true){
-                    Object newMessage = inputStream.readObject();
-                    if (newMessage instanceof Message){
-                        System.out.println("nice");
+                    Object message = inputStream.readObject();
+                    if (message instanceof Message){
+                        connectionManager.messageReceived((Message) message);
                     }
                 }
 

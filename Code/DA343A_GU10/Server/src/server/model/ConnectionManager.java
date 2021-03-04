@@ -1,5 +1,6 @@
 package server.model;
 
+import shared.Message;
 import shared.User;
 
 import java.io.*;
@@ -30,6 +31,14 @@ public class ConnectionManager extends Thread {
         this.connectionListener = listener;
     }
 
+    public void messageReceived(Message message) {
+        messageListener.messageReceived(message);
+    }
+    
+    public void connectionReceived(User user, Connection connection){
+        connectionListener.newConnection(user,connection);
+    }
+
     @Override
     public void run(){
         try {
@@ -37,8 +46,6 @@ public class ConnectionManager extends Thread {
 
                 Socket socket = serverSocket.accept();
                 Connection connection = new Connection(socket, this);
-                ClientAuthenticator clientAuthenticator = new ClientAuthenticator(connection);
-                clientAuthenticator.start();
 
             }
         }catch (IOException e){
@@ -46,23 +53,4 @@ public class ConnectionManager extends Thread {
         }
     }
 
-    private class ClientAuthenticator extends Thread{
-
-        private Connection connection;
-
-        public ClientAuthenticator(Connection connection) {
-            this.connection = connection;
-        }
-
-        @Override
-        public void run(){
-            try {
-                User user = connection.getUser();
-                connectionListener.newConnection(user, connection);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
 }
