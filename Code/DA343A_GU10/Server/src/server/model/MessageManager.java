@@ -7,8 +7,6 @@ import java.util.HashMap;
 
 public class MessageManager implements MessageListener {
 
-
-
     @Override
     public void messageReceived(Message message) {
 

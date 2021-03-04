@@ -2,6 +2,7 @@ package server.controller;
 
 import server.model.ConnectionManager;
 import server.model.MessageManager;
+import server.model.UserManager;
 
 public class MessageServer {
 
@@ -11,10 +12,13 @@ public class MessageServer {
     }
 
     MessageServer(int port){
-        ConnectionManager connectionManager = new ConnectionManager(port);
         MessageManager messageManager = new MessageManager();
-        connectionManager.registerConnectionListener(messageManager);
+        UserManager userManager = new UserManager();
+        
+        ConnectionManager connectionManager = new ConnectionManager(port);
+
         connectionManager.registerMessageListener(messageManager);
+        connectionManager.registerConnectionListener(userManager);
     }
 
 }
