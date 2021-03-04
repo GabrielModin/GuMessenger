@@ -34,7 +34,7 @@ public class ConnectionManager extends Thread {
     public void messageReceived(Message message) {
         messageListener.messageReceived(message);
     }
-    
+
     public void connectionReceived(User user, Connection connection){
         connectionListener.newConnection(user,connection);
     }

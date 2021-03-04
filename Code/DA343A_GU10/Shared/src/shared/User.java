@@ -14,6 +14,7 @@ public class User implements Serializable {
         this.img = img;
     }
 
+    @Override
     public int hashCode() {return name.hashCode();}
 
     public boolean equals(Object obj) {

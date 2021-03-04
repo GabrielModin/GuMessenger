@@ -7,6 +7,9 @@ import shared.Message;
 
 public class Connection {
 
+    Send send;
+    Receive receive;
+
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
 
@@ -15,6 +18,7 @@ public class Connection {
 
     Connection(Socket socket, ConnectionManager connectionManager){
         this.socket = socket;
+        this.connectionManager = connectionManager;
 
         try {
             outputStream = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
@@ -24,27 +28,39 @@ public class Connection {
             e.printStackTrace();
         }
 
-        Send send = new Send();
-        Receive receive = new Receive();
+        send = new Send();
+        receive = new Receive();
 
         send.start();
         receive.start();
+    }
+
+    public void sendMessage(Message message){
+        send.sendMessage(message);
     }
 
     public Connection getConnection(){
         return this;
     }
 
-    class Send extends Thread{
+    private class Send extends Thread{
+
+        Buffer<Message> messageBuffer= new Buffer<>();
+
+        public void sendMessage(Message message){
+            messageBuffer.put(message);
+        }
 
         @Override
         public void run() {
             try{
                 while (true){
+                    outputStream.writeObject(messageBuffer.get());
                     outputStream.flush();
-                    return;
                 }
             } catch (IOException e){
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
