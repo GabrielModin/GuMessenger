@@ -77,9 +77,9 @@ public class Connection {
 
             } catch (Exception e) {
                 e.printStackTrace();
+            }
         }
     }
-
     public void disconnect() throws IOException {
         socket.close();
     }
