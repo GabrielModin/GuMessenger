@@ -1,5 +1,6 @@
 package client.model;
 
+import client.controller.MessageClient;
 import shared.Message;
 import shared.User;
 import java.io.IOException;
@@ -8,21 +9,27 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Connection {
+
     private Socket socket;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
+    private User user;
 
-    public Connection(String ipAddress, int port) throws IOException{
+
+
+    public Connection(String ipAddress, int port, User user) throws IOException{
         this.socket = new Socket(ipAddress, port);
+        this.user = user;
+
         oos = new ObjectOutputStream(socket.getOutputStream());
         oos.flush();
         ois = new ObjectInputStream(socket.getInputStream());
 
         Send send = new Send();
         Receive receive = new Receive();
+
         send.start();
         receive.start();
-
     }
 
     class Send extends Thread {
@@ -33,21 +40,13 @@ public class Connection {
         public void run() {
             try {
 
-                User testUser =  new User("Tomten",null);
-
-                oos.writeObject(testUser);
+                oos.writeObject(user);
                 oos.flush();
 
                 while (true){
-                    messageBuffer.get();
+                    oos.writeObject(messageBuffer.get());
+                    oos.flush();
                 }
-//                while(true) {
-//                    shared.User testRecieve = new shared.User("Gabbe", null);
-//                    shared.Message msgToSend = new shared.Message(testUser, testRecieve, new Date());
-//
-//                    oos.writeObject(msgToSend);
-//                    oos.flush();
-//                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {

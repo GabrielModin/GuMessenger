@@ -14,11 +14,11 @@ public class Connection {
     private ObjectInputStream inputStream;
 
     private Socket socket;
-    private ConnectionManager connectionManager;
+    private ConnectionController connectionController;
 
-    Connection(Socket socket, ConnectionManager connectionManager){
+    Connection(Socket socket, ConnectionController connectionController){
         this.socket = socket;
-        this.connectionManager = connectionManager;
+        this.connectionController = connectionController;
 
         try {
             outputStream = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
@@ -45,7 +45,7 @@ public class Connection {
 
     private class Send extends Thread{
 
-        Buffer<Message> messageBuffer= new Buffer<>();
+        Buffer<Message> messageBuffer = new Buffer<>();
 
         public void sendMessage(Message message){
             messageBuffer.put(message);
@@ -75,15 +75,17 @@ public class Connection {
                 Object object = inputStream.readObject();
                 if (object instanceof User){
                     User user = (User) object;
-                    connectionManager.connectionReceived(user , getConnection());
+                    connectionController.connectionReceived(user , getConnection());
+                    System.out.println(user.getName());
                 } else {
                     System.out.println("Object received from user not instance of User");
                 }
 
                 while (true){
                     Object message = inputStream.readObject();
+                    System.out.println("Got message");
                     if (message instanceof Message){
-                        connectionManager.messageReceived((Message) message);
+                        connectionController.messageReceived((Message) message);
                     }
                 }
 

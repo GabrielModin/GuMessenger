@@ -1,8 +1,10 @@
 package server.controller;
 
-import server.model.ConnectionManager;
+import server.model.ConnectionController;
 import server.model.MessageManager;
-import server.model.UserManager;
+import server.model.ConnectionManager;
+import shared.Message;
+import shared.User;
 
 public class MessageServer {
 
@@ -11,14 +13,22 @@ public class MessageServer {
         MessageServer client = new MessageServer(port);
     }
 
+    ConnectionController connectionController;
+    MessageManager messageManager;
+    ConnectionManager connectionManager;
+
     MessageServer(int port){
-        ConnectionManager connectionManager = new ConnectionManager(port);
-        MessageManager messageManager = new MessageManager();
-        UserManager userManager = new UserManager();
+        connectionController = new ConnectionController(port);
+        messageManager = new MessageManager(this);
+        connectionManager = new ConnectionManager();
 
+        connectionController.registerMessageListener(messageManager);
+        connectionController.registerConnectionListener(connectionManager);
+    }
 
-        connectionManager.registerMessageListener(messageManager);
-        connectionManager.registerConnectionListener(userManager);
+    public void send(User user, Message message){
+        System.out.println("Server received message to send to user : " + user.getName());
+        connectionManager.send(user,message);
     }
 
 }
