@@ -7,16 +7,18 @@ import shared.Message;
 
 public class Connection {
 
+    Send send;
+    Receive receive;
+
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
 
     private Socket socket;
-    private User user = null;
     private ConnectionManager connectionManager;
-
 
     Connection(Socket socket, ConnectionManager connectionManager){
         this.socket = socket;
+        this.connectionManager = connectionManager;
 
         try {
             outputStream = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
@@ -26,34 +28,39 @@ public class Connection {
             e.printStackTrace();
         }
 
-        Send send = new Send();
-        Receive receive = new Receive();
+        send = new Send();
+        receive = new Receive();
 
         send.start();
         receive.start();
     }
 
-    public synchronized User getUser() throws InterruptedException {
-        if(user == null){
-            wait();
-        }
-        return user;
-    }
-    public synchronized void setUser(User user){
-        this.user = user;
-        notifyAll();
+    public void sendMessage(Message message){
+        send.sendMessage(message);
     }
 
-    class Send extends Thread{
+    public Connection getConnection(){
+        return this;
+    }
+
+    private class Send extends Thread{
+
+        Buffer<Message> messageBuffer= new Buffer<>();
+
+        public void sendMessage(Message message){
+            messageBuffer.put(message);
+        }
 
         @Override
         public void run() {
             try{
                 while (true){
+                    outputStream.writeObject(messageBuffer.get());
                     outputStream.flush();
-                    return;
                 }
             } catch (IOException e){
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -64,17 +71,19 @@ public class Connection {
         @Override
         public void run() {
             try{
-                Object userLogin = inputStream.readObject();
-                if (userLogin instanceof User){
-                    setUser((User) userLogin);
+
+                Object object = inputStream.readObject();
+                if (object instanceof User){
+                    User user = (User) object;
+                    connectionManager.connectionReceived(user , getConnection());
                 } else {
                     System.out.println("Object received from user not instance of User");
                 }
 
                 while (true){
-                    Object newMessage = inputStream.readObject();
-                    if (newMessage instanceof Message){
-                        System.out.println("nice");
+                    Object message = inputStream.readObject();
+                    if (message instanceof Message){
+                        connectionManager.messageReceived((Message) message);
                     }
                 }
 

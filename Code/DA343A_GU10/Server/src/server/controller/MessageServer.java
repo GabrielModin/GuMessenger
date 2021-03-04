@@ -12,10 +12,10 @@ public class MessageServer {
     }
 
     MessageServer(int port){
+        ConnectionManager connectionManager = new ConnectionManager(port);
         MessageManager messageManager = new MessageManager();
         UserManager userManager = new UserManager();
-        
-        ConnectionManager connectionManager = new ConnectionManager(port);
+
 
         connectionManager.registerMessageListener(messageManager);
         connectionManager.registerConnectionListener(userManager);
