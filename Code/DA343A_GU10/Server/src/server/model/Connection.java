@@ -64,7 +64,6 @@ public class Connection {
         @Override
         public void run() {
             try{
-
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
                     setUser((User) userLogin);
