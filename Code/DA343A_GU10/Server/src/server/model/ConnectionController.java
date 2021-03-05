@@ -36,7 +36,8 @@ public class ConnectionController extends Thread {
     }
 
     public void connectionReceived(User user, Connection connection){
-        connectionListener.newConnection(user,connection);
+        connectionListener.checkUserConnection(user, connection);
+        //connectionListener.newConnection(user,connection);
     }
 
     @Override
