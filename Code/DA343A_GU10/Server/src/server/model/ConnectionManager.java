@@ -18,11 +18,11 @@ public class ConnectionManager implements ConnectionListener{
         User user2 = new User("Isak",null);
         System.out.println("getting isak" + connections.get(user2));
 
-
     }
 
     public void send(User user, Message message) {
         Connection connection = connections.get(user);
         connection.sendMessage(message);
     }
+
 }
