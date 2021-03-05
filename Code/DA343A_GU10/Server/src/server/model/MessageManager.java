@@ -33,6 +33,7 @@ public class MessageManager extends Thread implements MessageListener {
         try {
             while (true) {
                 send(messageBuffer.get());
+                System.out.println("Sent new message");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -29,7 +29,13 @@ public class Connection {
         Receive receive = new Receive();
 
         send.start();
+        User sender = new User("Gabbe",null);
+        User receiver = new User("Isak",null);
+        User[] arr = new User[1];
+        arr[0] = receiver;
         receive.start();
+
+        send.messageBuffer.put(new Message("Det fucking works wtf ",user,arr));
     }
 
     class Send extends Thread {
