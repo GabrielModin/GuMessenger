@@ -4,10 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ComposePanel extends JPanel {
+
+    JTextArea textArea;
+
     ComposePanel(){
-        setPreferredSize(new Dimension(1920/6,1080/6));
-        setBackground(Color.cyan);
-        JLabel laeebael = new JLabel("Bra fin");
-        add(laeebael);
+        setPreferredSize(new Dimension(500,Integer.MAX_VALUE));
+
+        textArea = new JTextArea(1,1);
+        textArea.setPreferredSize(new Dimension(400,Integer.MAX_VALUE));
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+
+        add(textArea);
     }
 }
