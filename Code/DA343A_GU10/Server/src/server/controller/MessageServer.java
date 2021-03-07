@@ -20,7 +20,7 @@ public class MessageServer {
     MessageServer(int port){
         connectionController = new ConnectionController(port);
         messageManager = new MessageManager(this);
-        connectionManager = new ConnectionManager();
+        connectionManager = new ConnectionManager(messageManager);
 
         connectionController.registerMessageListener(messageManager);
         connectionController.registerConnectionListener(connectionManager);

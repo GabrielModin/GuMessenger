@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class MessageManager extends Thread implements MessageListener {
 
     Buffer<Message> messageBuffer = new Buffer<>();
+    private HashMap<User, Message> pendingMessages = new HashMap<>();
     MessageServer controller;
 
     public MessageManager(MessageServer controller){
@@ -38,5 +39,16 @@ public class MessageManager extends Thread implements MessageListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void checkPendingMessages(User user) {
+        if (pendingMessages.containsKey(user)) {
+            Message message = pendingMessages.get(user);
+            System.out.println("New message : " + message);
+        }
+    }
+
+    public void putPendingMessage(User user, Message message) {
+        pendingMessages.put(user, message);
     }
 }
