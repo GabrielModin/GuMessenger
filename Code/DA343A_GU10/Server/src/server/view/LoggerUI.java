@@ -1,22 +1,12 @@
 package server.view;
 
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.time.*;
 
 public class LoggerUI {
 
@@ -133,7 +123,7 @@ public class LoggerUI {
 
     public static void main(String[] args) {
         LoggerUI loggerUI = new LoggerUI();
-        loggerUI.readLogFile("Code/DA343A_GU10/files/TrafficLog.log", "2021/03/05-00:00", "2021/03/09-00:00");
-//        loggerUI.readLogFile("Code/DA343A_GU10/files/TrafficLog.log");
+//        loggerUI.readLogFile("Code/DA343A_GU10/files/TrafficLog.log", "2021/03/05-00:00", "2021/03/09-00:00");
+        loggerUI.readLogFile("Code/DA343A_GU10/files/TrafficLog.log");
     }
 }

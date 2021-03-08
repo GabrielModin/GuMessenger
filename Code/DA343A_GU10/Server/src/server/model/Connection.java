@@ -1,11 +1,11 @@
 package server.model;
 
+import shared.Message;
+import shared.User;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.logging.Logger;
-
-import shared.User;
-import shared.Message;
 
 public class Connection {
 
@@ -94,6 +94,8 @@ public class Connection {
 
                     if (message instanceof Message){
                         connectionController.messageReceived((Message) message);
+
+                        //TODO vi kommer ha en variabel sen med user s[ vi slipper g;ra dtta
                         User[] users = ((Message) message).getReceivers();
 
                         for (User user : users) {
