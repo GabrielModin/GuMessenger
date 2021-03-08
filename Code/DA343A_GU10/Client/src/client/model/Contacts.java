@@ -8,6 +8,7 @@ import java.util.LinkedList;
 public class Contacts {
     User user;
     LinkedList<User> contacts;
+    LinkedList<User> allOnline;
 
     public Contacts(User user) {
         this.user = user;
@@ -27,5 +28,11 @@ public class Contacts {
 
     public String toString() {
         return "hajsan :)";
+    }
+
+    public User[] getReceivers(int[] receiverIndex) {
+        User[] receivers = new User[1];
+        receivers[0] = new User ("Gabbe", null);
+        return receivers;
     }
 }

@@ -1,8 +1,10 @@
 package server.controller;
 
-import server.model.ConnectionManager;
+import server.model.ConnectionController;
 import server.model.MessageManager;
-import server.model.UserManager;
+import server.model.ConnectionManager;
+import shared.Message;
+import shared.User;
 
 public class MessageServer {
 
@@ -11,14 +13,10 @@ public class MessageServer {
         MessageServer client = new MessageServer(port);
     }
 
+    ConnectionController connectionController;
+
     MessageServer(int port){
-        ConnectionManager connectionManager = new ConnectionManager(port);
-        MessageManager messageManager = new MessageManager();
-        UserManager userManager = new UserManager();
-
-
-        connectionManager.registerMessageListener(messageManager);
-        connectionManager.registerConnectionListener(userManager);
+        connectionController = new ConnectionController(port);
     }
 
 }

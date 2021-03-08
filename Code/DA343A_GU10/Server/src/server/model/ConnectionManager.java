@@ -3,54 +3,38 @@ package server.model;
 import shared.Message;
 import shared.User;
 
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.HashMap;
 
-public class ConnectionManager extends Thread {
+public class ConnectionManager implements ConnectionListener {
+    private HashMap<User, Connection> connections = new HashMap<>();
+    private MessageManager messageManager;
 
-    private ServerSocket serverSocket;
-    ConnectionListener connectionListener;
-    MessageListener messageListener;
-
-
-    public ConnectionManager(int port) {
-        try {
-            serverSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        start();
-    }
-
-    public void registerMessageListener(MessageListener listener){
-        this.messageListener = listener;
-    }
-    public void registerConnectionListener(ConnectionListener listener){
-        this.connectionListener = listener;
-    }
-
-    public void messageReceived(Message message) {
-        messageListener.messageReceived(message);
-    }
-
-    public void connectionReceived(User user, Connection connection){
-        connectionListener.newConnection(user,connection);
+    public ConnectionManager() {
+        this.messageManager = new MessageManager(this);
     }
 
     @Override
-    public void run(){
-        try {
-            while (true) {
+    public void newConnection(User user, Connection connection) {
 
-                Socket socket = serverSocket.accept();
-                Connection connection = new Connection(socket, this);
-
-            }
-        }catch (IOException e){
-            e.printStackTrace();
+        if(connections.containsKey(user)){
+            connections.remove(user);
         }
+        
+        connections.put(user,connection);
+        messageManager.sendPendingMessages(user);
+    }
+
+    public void send(User user, Message message) {
+        if (connections.containsKey(user)) {
+            Connection connection = connections.get(user);
+            connection.sendMessage(message);
+        } else {
+            messageManager.putPendingMessage(user, message);
+        }
+    }
+
+    public MessageListener getMessageListener() {
+        return messageManager;
     }
 
 }

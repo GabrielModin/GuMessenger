@@ -1,5 +1,6 @@
 package client.model;
 
+import client.controller.MessageClient;
 import shared.Message;
 import shared.User;
 import java.io.IOException;
@@ -8,49 +9,58 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Connection {
+
     private Socket socket;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
+    private User user;
+    private Send send;
+    private Receive receive;
+    private MessageListener listener;
 
-    public Connection(String ipAddress, int port) throws IOException{
+    public Connection(String ipAddress, int port, User user) throws IOException{
         this.socket = new Socket(ipAddress, port);
+        this.user = user;
+
         oos = new ObjectOutputStream(socket.getOutputStream());
         oos.flush();
         ois = new ObjectInputStream(socket.getInputStream());
 
-        Send send = new Send();
-        Receive receive = new Receive();
+        send = new Send();
+        receive = new Receive();
+
         send.start();
         receive.start();
-
     }
+
+    public void registerMessageListener(MessageListener listener){
+        this.listener = listener;
+    }
+
+    public void sendMessage(Message message){
+        send.addToBuffer(message);
+    }
+
 
     class Send extends Thread {
 
         Buffer<Message> messageBuffer = new Buffer<>();
 
+        public void addToBuffer(Message message){
+            messageBuffer.put(message);
+        }
+
         @Override
         public void run() {
             try {
 
-                User testUser =  new User("Tomten",null);
-
-                oos.writeObject(testUser);
-                oos.flush();
-
-                oos.writeObject(new Message(null,null,null,null,null));
+                oos.writeObject(user);
                 oos.flush();
 
                 while (true){
-                    messageBuffer.get();
+                    oos.writeObject(messageBuffer.get());
+                    oos.flush();
                 }
-//                while(true) {
-//                    shared.User testRecieve = new shared.User("Gabbe", null);
-//                    shared.Message msgToSend = new shared.Message(testUser, testRecieve, new Date());
-//
-//                    oos.writeObject(msgToSend);
-//                    oos.flush();
-//                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -68,7 +78,7 @@ public class Connection {
 
                 while (true) {
                     Message msgReceived = (Message) ois.readObject();
-                    System.out.println(msgReceived.getMessage());
+                    listener.messageReceived(msgReceived);
                     //någon metod för att visa i UI;
                 }
 
