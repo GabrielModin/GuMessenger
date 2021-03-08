@@ -15,19 +15,19 @@ public class Message implements Serializable {
         this.sender = sender;
         this.receivers = receivers;
     }
-    public Message(String message, ImageIcon img, User sender, User[] receivers){
+    public Message(User sender, User[] receivers, String message, ImageIcon img){
         this(sender, receivers);
         this.message = message;
         this.img = img;
     }
 
-    public Message(String message, User sender, User[] receivers){
+    public Message(User sender, User[] receivers, String message){
         this(sender, receivers);
         this.message = message;
         this.img = null;
     }
 
-    public Message(ImageIcon img, User sender, User[] receivers){
+    public Message(User sender, User[] receivers, ImageIcon img){
         this(sender, receivers);
         this.img = img;
         this.message = null;

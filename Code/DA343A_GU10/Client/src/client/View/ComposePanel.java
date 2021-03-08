@@ -17,4 +17,8 @@ public class ComposePanel extends JPanel {
 
         add(textArea);
     }
+
+    public String getTextFromTextArea() {
+        return textArea.getText();
+    }
 }

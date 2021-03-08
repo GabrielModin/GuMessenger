@@ -2,13 +2,13 @@ package client.model;
 
 
 import shared.User;
-
 import java.io.*;
 import java.util.LinkedList;
 
 public class Contacts {
     User user;
     LinkedList<User> contacts;
+    LinkedList<User> fullUserList;
 
     public Contacts(User user) {
         this.user = user;
@@ -47,7 +47,6 @@ public class Contacts {
         return contactsSaved;
     }
 
-
     public void readContactsFromFile() {
         String filepath = "files/contact_list_" + user.getName() + ".dat";
         User readContact;
@@ -64,8 +63,15 @@ public class Contacts {
             e.printStackTrace();
         }
     }
+  
+    public User[] getReceivers(int[] receiverIndex) {
+        User[] receivers = new User[1];
+        receivers[0] = new User ("Gabbe", null);
+        return receivers;
+    }
 
     public String toString() {
         return "hajsan :)";
     }
+
 }

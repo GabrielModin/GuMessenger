@@ -2,49 +2,52 @@ package client.controller;
 
 import client.View.GUI;
 import client.model.*;
+import shared.Message;
 import shared.User;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class MessageClient {
 
     public static void main(String[] args) {
+        Scanner input  = new Scanner(System.in);
         String ip = "127.0.0.1";
         int port = 1089;
-        GUI gui = new GUI();
-        gui.addUserToOnlineList("Gabbe", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Anton", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Isak", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Nicho", new ImageIcon("files/icon/giphy.gif"), false);
-        gui.addUserToOnlineList("Farid", new ImageIcon("files/icon/giphy.gif"), false);
-        gui.addUserToOnlineList("Gabbe", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Anton", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Isak", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Nicho", new ImageIcon("files/icon/giphy.gif"), false);
-        gui.addUserToOnlineList("Farid", new ImageIcon("files/icon/giphy.gif"), false);
-        gui.addUserToOnlineList("Gabbe", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Anton", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Isak", new ImageIcon("files/icon/giphy.gif"), true);
-        gui.addUserToOnlineList("Nicho", new ImageIcon("files/icon/giphy.gif"), false);
-        gui.addUserToOnlineList("Farid", new ImageIcon("files/icon/giphy.gif"), false);
 
-
-
-
-//
-//        MessageClient client = new MessageClient(ip, port, new User("Gabbe",null));
-//        MessageClient client1 = new MessageClient(ip, port, new User("Isak",null));
+        MessageClient client = new MessageClient(ip, port);
+        MessageClient client2 = new MessageClient(ip, port);
     }
 
+    MessageManager messageManager;
+    Connection connection;
+    GUI gui;
+    Contacts contacts;
+    User currentUser;
 
-    MessageClient(String ip, int port, User user){
+    MessageClient(String ip, int port){
 
         try {
-            Connection connection = new Connection(ip, port, user);
+            gui = new GUI(this);
+
+            String name = gui.getUserName();
+            ImageIcon icon = gui.getUserIcon();
+            currentUser = new User(name,icon);
+            contacts = new Contacts(currentUser);
+
+            messageManager = new MessageManager(this);
+            connection = new Connection(ip, port, currentUser);
+            connection.registerMessageListener(messageManager);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void sendMessage(String text, ImageIcon image, int[] receiverIndex) {
+        User[] receivers = contacts.getReceivers(receiverIndex);
+        connection.sendMessage(new Message(currentUser,receivers,text,image));
+    }
+    public void refreshContactsGui(User[] users){
+    }
 }
