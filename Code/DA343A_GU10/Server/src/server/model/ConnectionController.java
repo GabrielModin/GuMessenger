@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class ConnectionController extends Thread {
 
     private ServerSocket serverSocket;
+    ConnectionManager connectionManager;
     ConnectionListener connectionListener;
     MessageListener messageListener;
 
@@ -21,6 +22,12 @@ public class ConnectionController extends Thread {
 
 
     public ConnectionController(int port) {
+
+        connectionManager = new ConnectionManager();
+
+        registerConnectionListener(connectionManager);
+        registerMessageListener(connectionManager.getMessageListener());
+
         try {
             fh = new FileHandler("Code/DA343A_GU10/files/TrafficLog.log");
             logger.addHandler(fh);
@@ -35,6 +42,7 @@ public class ConnectionController extends Thread {
     public void registerMessageListener(MessageListener listener){
         this.messageListener = listener;
     }
+
     public void registerConnectionListener(ConnectionListener listener){
         this.connectionListener = listener;
     }
@@ -61,4 +69,7 @@ public class ConnectionController extends Thread {
         }
     }
 
+    public void disconnected(User user) {
+        connectionManager.connectionClosed(user);
+    }
 }

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 public class UserListItem extends JPanel {
 
+    private int index;
     ImageIcon icon;
     String name;
     boolean online;
@@ -16,16 +17,19 @@ public class UserListItem extends JPanel {
     JLabel onlineLabel;
     JCheckBox selected;
 
-    UserListItem(String name, ImageIcon icon, boolean online, UserList userList){
+    UserListItem(String name, ImageIcon icon, boolean online, UserList userList, int numUsers){
 
         this.icon = icon;
         this.name = name;
         this.online = online;
-
+        this.index = numUsers;
 
         setLayout(new GridLayout(1,4));
-
-        iconLabel = new JLabel(icon);
+        if (icon!=null){
+            iconLabel = new JLabel(icon);
+        } else {
+            iconLabel = new JLabel(new ImageIcon("files/noImg.png"));
+        }
         nameButton = new JButton(name);
         onlineLabel = new JLabel("" + online);
         selected = new JCheckBox();
@@ -40,5 +44,11 @@ public class UserListItem extends JPanel {
         setBorder(BorderFactory.createBevelBorder(1));
     }
 
+    public int getIndex(){
+        return index;
+    }
 
+    public boolean isChecked() {
+        return selected.isSelected();
+    }
 }
