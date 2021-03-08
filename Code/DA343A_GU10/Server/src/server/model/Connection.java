@@ -73,6 +73,7 @@ public class Connection {
             try{
 
                 Object object = inputStream.readObject();
+
                 if (object instanceof User){
                     User user = (User) object;
                     connectionController.connectionReceived(user , getConnection());
@@ -83,10 +84,11 @@ public class Connection {
 
                 while (true){
                     Object message = inputStream.readObject();
-                    System.out.println("Got message");
+
                     if (message instanceof Message){
                         connectionController.messageReceived((Message) message);
                     }
+
                 }
 
             } catch (Exception e){

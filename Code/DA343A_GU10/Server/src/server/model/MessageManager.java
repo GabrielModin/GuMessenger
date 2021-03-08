@@ -1,10 +1,7 @@
 package server.model;
 
-import server.controller.MessageServer;
 import shared.Message;
 import shared.User;
-
-import java.util.HashMap;
 
 public class MessageManager extends Thread implements MessageListener {
 

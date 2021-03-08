@@ -15,6 +15,7 @@ public class ConnectionManager implements ConnectionListener {
 
     @Override
     public void newConnection(User user, Connection connection) {
+
         if (!checkUserConnection(user, connection)) {
             connections.put(user, connection);
         }
@@ -33,6 +34,7 @@ public class ConnectionManager implements ConnectionListener {
             }
         }
         return false;
+        connections.put(user, connection);
     }
 
     public void send(User user, Message message) {
@@ -47,4 +49,5 @@ public class ConnectionManager implements ConnectionListener {
     public MessageListener getMessageListener() {
         return messageManager;
     }
+
 }
