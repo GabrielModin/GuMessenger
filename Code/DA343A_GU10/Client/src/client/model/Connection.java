@@ -14,8 +14,9 @@ public class Connection {
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
     private User user;
-
-
+    private Send send;
+    private Receive receive;
+    private MessageListener listener;
 
     public Connection(String ipAddress, int port, User user) throws IOException{
         this.socket = new Socket(ipAddress, port);
@@ -29,18 +30,25 @@ public class Connection {
         Receive receive = new Receive();
 
         send.start();
-        User sender = new User("Gabbe",null);
-        User receiver = new User("Isak",null);
-        User[] arr = new User[1];
-        arr[0] = receiver;
         receive.start();
-
-        send.messageBuffer.put(new Message("Det fucking works wtf ",user,arr));
     }
+
+    public void registerMessageListener(MessageListener listener){
+        this.listener = listener;
+    }
+
+    public void sendMessage(Message message){
+        send.addToBuffer(message);
+    }
+
 
     class Send extends Thread {
 
         Buffer<Message> messageBuffer = new Buffer<>();
+
+        public void addToBuffer(Message message){
+            messageBuffer.put(message);
+        }
 
         @Override
         public void run() {
@@ -70,7 +78,7 @@ public class Connection {
 
                 while (true) {
                     Message msgReceived = (Message) ois.readObject();
-                    System.out.println(msgReceived.getMessage() + " " + msgReceived.getTimestamp());
+                    listener.messageReceived(msgReceived);
                     //någon metod för att visa i UI;
                 }
 

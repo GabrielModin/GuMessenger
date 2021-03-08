@@ -5,11 +5,11 @@ import shared.User;
 
 import java.util.LinkedList;
 
-public class CurrentUser {
+public class Contacts {
     User user;
     LinkedList<User> contacts;
 
-    public CurrentUser(User user) {
+    public Contacts(User user) {
         this.user = user;
         contacts = new LinkedList<User>();
     }

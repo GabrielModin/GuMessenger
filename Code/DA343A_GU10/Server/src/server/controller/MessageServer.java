@@ -14,17 +14,9 @@ public class MessageServer {
     }
 
     ConnectionController connectionController;
-    MessageManager messageManager;
-    ConnectionManager connectionManager;
 
     MessageServer(int port){
         connectionController = new ConnectionController(port);
-        connectionManager = new ConnectionManager();
-        messageManager = new MessageManager(connectionManager);
-
-        connectionController.registerMessageListener(messageManager);
-        connectionController.registerConnectionListener(connectionManager);
     }
-
 
 }
