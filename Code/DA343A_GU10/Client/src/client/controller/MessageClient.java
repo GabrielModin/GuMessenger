@@ -19,10 +19,11 @@ public class MessageClient {
         MessageClient client1 = new MessageClient(ip, port, new User(name,null));
     }
 
-
     MessageClient(String ip, int port, User user){
         try {
+            MessageManager messageManager = new MessageManager(this);
             Connection connection = new Connection(ip, port, user);
+            connection.registerMessageListener(messageManager);
         } catch (IOException e) {
             e.printStackTrace();
         }

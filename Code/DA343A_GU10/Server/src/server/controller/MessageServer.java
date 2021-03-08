@@ -14,21 +14,9 @@ public class MessageServer {
     }
 
     ConnectionController connectionController;
-    MessageManager messageManager;
-    ConnectionManager connectionManager;
 
     MessageServer(int port){
         connectionController = new ConnectionController(port);
-        messageManager = new MessageManager(this);
-        connectionManager = new ConnectionManager(messageManager);
-
-        connectionController.registerMessageListener(messageManager);
-        connectionController.registerConnectionListener(connectionManager);
-    }
-
-    public void send(User user, Message message){
-        System.out.println("Server received message to send to user : " + user.getName());
-        connectionManager.send(user,message);
     }
 
 }

@@ -9,8 +9,8 @@ public class ConnectionManager implements ConnectionListener {
     private HashMap<User, Connection> connections = new HashMap<>();
     private MessageManager messageManager;
 
-    public ConnectionManager(MessageManager messageManager) {
-        this.messageManager = messageManager;
+    public ConnectionManager() {
+        this.messageManager = new MessageManager(this);
     }
 
     @Override
@@ -18,12 +18,7 @@ public class ConnectionManager implements ConnectionListener {
         if (!checkUserConnection(user, connection)) {
             connections.put(user, connection);
         }
-        messageManager.checkPendingMessages(user);
-
-        User user1 = new User("Gabbe",null);
-        System.out.println("Sent from " + connections.get(user1));
-        User user2 = new User("Isak",null);
-        System.out.println("getting Isak " + connections.get(user2));
+        messageManager.sendPendingMessages(user);
     }
 
     public boolean checkUserConnection(User user, Connection connection) {
@@ -40,15 +35,16 @@ public class ConnectionManager implements ConnectionListener {
         return false;
     }
 
-
-
     public void send(User user, Message message) {
-        if (!connections.containsKey(user)) {
-            messageManager.putPendingMessage(user, message);
-        }
-        else {
+        if (connections.containsKey(user)) {
             Connection connection = connections.get(user);
             connection.sendMessage(message);
+        } else {
+            messageManager.putPendingMessage(user, message);
         }
+    }
+
+    public MessageListener getMessageListener() {
+        return messageManager;
     }
 }

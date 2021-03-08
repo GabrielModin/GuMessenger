@@ -11,11 +11,18 @@ import java.util.HashMap;
 public class ConnectionController extends Thread {
 
     private ServerSocket serverSocket;
+    ConnectionManager connectionManager;
     ConnectionListener connectionListener;
     MessageListener messageListener;
 
 
     public ConnectionController(int port) {
+
+        connectionManager = new ConnectionManager();
+
+        registerConnectionListener(connectionManager);
+        registerMessageListener(connectionManager.getMessageListener());
+
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
@@ -27,6 +34,7 @@ public class ConnectionController extends Thread {
     public void registerMessageListener(MessageListener listener){
         this.messageListener = listener;
     }
+
     public void registerConnectionListener(ConnectionListener listener){
         this.connectionListener = listener;
     }
@@ -36,7 +44,6 @@ public class ConnectionController extends Thread {
     }
 
     public void connectionReceived(User user, Connection connection){
-        //connectionListener.checkUserConnection(user, connection);
         connectionListener.newConnection(user,connection);
     }
 
