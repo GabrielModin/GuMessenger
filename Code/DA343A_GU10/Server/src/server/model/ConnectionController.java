@@ -7,6 +7,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 public class ConnectionController extends Thread {
 
@@ -14,6 +16,9 @@ public class ConnectionController extends Thread {
     ConnectionManager connectionManager;
     ConnectionListener connectionListener;
     MessageListener messageListener;
+
+    private FileHandler fh;
+    private Logger logger = Logger.getLogger(Connection.class.getName());
 
 
     public ConnectionController(int port) {
@@ -24,6 +29,9 @@ public class ConnectionController extends Thread {
         registerMessageListener(connectionManager.getMessageListener());
 
         try {
+            fh = new FileHandler("Code/DA343A_GU10/files/TrafficLog.log");
+            logger.addHandler(fh);
+
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,7 +61,7 @@ public class ConnectionController extends Thread {
             while (true) {
 
                 Socket socket = serverSocket.accept();
-                Connection connection = new Connection(socket, this);
+                Connection connection = new Connection(socket, this, logger);
 
             }
         }catch (IOException e){

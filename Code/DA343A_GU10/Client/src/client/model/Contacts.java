@@ -1,6 +1,5 @@
 package client.model;
 
-
 import shared.Message;
 import shared.User;
 import java.io.*;
@@ -70,7 +69,7 @@ public class Contacts {
 
         return contactsSaved;
     }
-
+  
     public void readContactsFromFile() {
         String filepath = "files/contact_list_" + user.getName() + ".dat";
         User readContact;
@@ -85,6 +84,7 @@ public class Contacts {
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
             return;
         }
     }
@@ -106,4 +106,5 @@ public class Contacts {
     public User[] getUsers() {
         return fullUserList.toArray(new User[0]);
     }
+
 }
