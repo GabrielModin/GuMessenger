@@ -50,4 +50,18 @@ public class MessageClient {
     }
     public void refreshContactsGui(User[] users){
     }
+
+    public void newUserListFromServer(Message message) {
+        System.out.println("refreshing user list");
+        contacts.createFullUserList(message);
+        resetGuiUserList(contacts.getUsers());
+    }
+
+    public void resetGuiUserList(User[] users){
+        gui.userListReset();
+        for (User user: users) {
+            System.out.println("adding to gui : " + user.getName());
+            gui.addUserToOnlineList(user.getName(),user.getImg(),user.isOnline());
+        }
+    }
 }

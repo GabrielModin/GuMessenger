@@ -61,4 +61,7 @@ public class ConnectionController extends Thread {
         }
     }
 
+    public void disconnected(User user) {
+        connectionManager.connectionClosed(user);
+    }
 }

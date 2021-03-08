@@ -9,6 +9,7 @@ public class User implements Serializable {
 
     String name;
     ImageIcon img;
+    boolean isOnline;
     public User(String name, ImageIcon img){
         this.name = name;
         this.img = img;
@@ -37,5 +38,13 @@ public class User implements Serializable {
 
     public String toString() {
         return name;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 }

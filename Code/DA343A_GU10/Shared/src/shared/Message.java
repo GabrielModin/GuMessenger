@@ -34,6 +34,7 @@ public class Message implements Serializable {
     }
     public Message(User[] receivers){
         this(null, receivers);
+        setMessage("contactList");
     }
 
 

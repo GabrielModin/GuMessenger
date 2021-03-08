@@ -25,8 +25,11 @@ public class UserListItem extends JPanel {
         this.index = numUsers;
 
         setLayout(new GridLayout(1,4));
-
-        iconLabel = new JLabel(icon);
+        if (icon!=null){
+            iconLabel = new JLabel(icon);
+        } else {
+            iconLabel = new JLabel(new ImageIcon("files/noImg.png"));
+        }
         nameButton = new JButton(name);
         onlineLabel = new JLabel("" + online);
         selected = new JCheckBox();

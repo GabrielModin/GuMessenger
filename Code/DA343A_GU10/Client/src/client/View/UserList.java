@@ -31,19 +31,22 @@ public class UserList extends JPanel implements ActionListener {
     }
 
     public void addUserToOnlineList(String user, ImageIcon icon, boolean online) {
-        numUsers++;
         UserListItem userListItem = new UserListItem(user,icon,online, this,numUsers);
+        numUsers++;
         userListItem.setPreferredSize(new Dimension(400,100));
         userListItem.setMaximumSize(new Dimension(400,100));
         userItemPanel.add(userListItem);
         userListItems.add(userListItem);
+        revalidate();
+        repaint();
     }
 
     public void reset() {
         numUsers = 0;
-        for (Component component: getComponents()) {
-            remove(component);
+        for (Component component: userItemPanel.getComponents()) {
+            userItemPanel.remove(component);
         }
+
     }
 
     @Override

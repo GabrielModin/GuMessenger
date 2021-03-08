@@ -4,6 +4,7 @@ import shared.Message;
 import shared.User;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class ConnectionManager implements ConnectionListener {
     private HashMap<User, Connection> connections = new HashMap<>();
@@ -21,11 +22,26 @@ public class ConnectionManager implements ConnectionListener {
         }
         
         connections.put(user,connection);
+
+        sendUserList();
+
         messageManager.sendPendingMessages(user);
+        messageManager.putPendingMessage(user,new Message(null,null,"hellow"));
+    }
+
+    private void sendUserList() {
+        User[] users = connections.keySet().toArray(new User[0]);
+        Message userList = new Message(users);
+
+        for (Connection connection: connections.values()) {
+            if (connection != null) {
+                connection.sendMessage(userList);
+            }
+        }
     }
 
     public void send(User user, Message message) {
-        if (connections.containsKey(user)) {
+        if (connections.get(user) != null) {
             Connection connection = connections.get(user);
             connection.sendMessage(message);
         } else {
@@ -37,4 +53,9 @@ public class ConnectionManager implements ConnectionListener {
         return messageManager;
     }
 
+    public void connectionClosed(User user) {
+        System.out.println("removed : " + user.getName());
+        connections.remove(user);
+        connections.put(user,null);
+    }
 }

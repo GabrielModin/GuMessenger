@@ -1,6 +1,7 @@
 package server.model;
 
 import java.io.*;
+import java.net.DatagramSocket;
 import java.net.Socket;
 import shared.User;
 import shared.Message;
@@ -9,6 +10,7 @@ public class Connection {
 
     Send send;
     Receive receive;
+    User user;
 
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
@@ -43,6 +45,10 @@ public class Connection {
         return this;
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
+
     private class Send extends Thread{
 
         Buffer<Message> messageBuffer = new Buffer<>();
@@ -75,7 +81,7 @@ public class Connection {
                 Object object = inputStream.readObject();
 
                 if (object instanceof User){
-                    User user = (User) object;
+                    user = (User) object;
                     connectionController.connectionReceived(user , getConnection());
                     System.out.println(user.getName());
                 } else {
@@ -92,7 +98,9 @@ public class Connection {
                 }
 
             } catch (Exception e){
-                System.out.println("User disconnected");
+                e.printStackTrace();
+                System.out.println("user disconected");
+                connectionController.disconnected(user);
             }
         }
     }

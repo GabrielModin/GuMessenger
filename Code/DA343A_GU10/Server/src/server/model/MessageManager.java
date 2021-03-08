@@ -39,7 +39,7 @@ public class MessageManager extends Thread implements MessageListener {
         try {
             while (true) {
                 send(messageBuffer.get());
-                System.out.println("Sent new message");
+
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -47,9 +47,11 @@ public class MessageManager extends Thread implements MessageListener {
     }
 
     public void sendPendingMessages(User user) {
-        System.out.println("checking for pending messages");
+        System.out.println("checking pending messages for : " + user.getName());
+
         if (pendingMessages.containsKey(user)) {
-            System.out.println("sending pending messages");
+
+            System.out.println(user.getName() + "has pending messages");
 
             Message[] message = pendingMessages.get(user);
             send(message, user);
@@ -58,7 +60,7 @@ public class MessageManager extends Thread implements MessageListener {
 
             return;
         }
-        System.out.println("no pending");
+        System.out.println(user.getName() + " has no messages ");
     }
 
     public void putPendingMessage(User user, Message message) {
