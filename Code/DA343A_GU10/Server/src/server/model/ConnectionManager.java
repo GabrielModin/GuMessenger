@@ -26,7 +26,6 @@ public class ConnectionManager implements ConnectionListener {
         sendUserList();
 
         messageManager.sendPendingMessages(user);
-        messageManager.putPendingMessage(user,new Message(null,null,"hellow"));
     }
 
     private void sendUserList() {
