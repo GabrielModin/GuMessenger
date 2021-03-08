@@ -16,25 +16,12 @@ public class ConnectionManager implements ConnectionListener {
     @Override
     public void newConnection(User user, Connection connection) {
 
-        if (!checkUserConnection(user, connection)) {
-            connections.put(user, connection);
+        if(connections.containsKey(user)){
+            connections.remove(user);
         }
+        
+        connections.put(user,connection);
         messageManager.sendPendingMessages(user);
-    }
-
-    public boolean checkUserConnection(User user, Connection connection) {
-        for (User u: connections.keySet()) {
-            if (u.getName().equals(user.getName())) {
-                if (u.getImg() != user.getImg()) {
-                    connections.remove(u);
-                    connections.put(user, connection);
-                    return true;
-                }
-                System.out.println("This user has not been changed since last login");
-            }
-        }
-        return false;
-        connections.put(user, connection);
     }
 
     public void send(User user, Message message) {

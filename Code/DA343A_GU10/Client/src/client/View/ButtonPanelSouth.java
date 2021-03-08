@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ButtonPanelSouth extends JPanel {
-    ButtonPanelSouth(){
+    ButtonPanelSouth(GUI gui){
         BorderLayout layout = new BorderLayout();
         setLayout(layout);
 
@@ -15,13 +15,21 @@ public class ButtonPanelSouth extends JPanel {
         JPanel readButtons = new JPanel();
         JPanel writeButtons = new JPanel();
 
+        JButton addContact = new JButton("Add to contacts");
+        JButton attachImage = new JButton("Attach image");
+        JButton sendMessage = new JButton("Send");
+
+        addContact.addActionListener(gui);
+        attachImage.addActionListener(gui);
+        sendMessage.addActionListener(gui);
+
         userButtons.setBackground(Color.red);
         readButtons.setBackground(Color.green);
         writeButtons.setBackground(Color.blue);
 
-        userButtons.add(new JButton("add to contacts"));
-        writeButtons.add(new JButton("attach image"));
-        writeButtons.add(new JButton("send"));
+        userButtons.add(addContact);
+        writeButtons.add(attachImage);
+        writeButtons.add(sendMessage);
 
         readButtons.setPreferredSize(new Dimension(1920/6,30));
 

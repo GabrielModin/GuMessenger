@@ -6,6 +6,4 @@ public interface ConnectionListener {
 
     public void newConnection(User user, Connection connection);
 
-    public boolean checkUserConnection(User user, Connection connection);
-
 }

@@ -3,6 +3,8 @@ package server.model;
 import shared.Message;
 import shared.User;
 
+import java.util.HashMap;
+
 public class MessageManager extends Thread implements MessageListener {
 
     Buffer<Message> messageBuffer = new Buffer<>();
@@ -45,14 +47,23 @@ public class MessageManager extends Thread implements MessageListener {
     }
 
     public void sendPendingMessages(User user) {
+        System.out.println("checking for pending messages");
         if (pendingMessages.containsKey(user)) {
+            System.out.println("sending pending messages");
+
             Message[] message = pendingMessages.get(user);
             send(message, user);
+
+            pendingMessages.remove(user);
+
+            return;
         }
+        System.out.println("no pending");
     }
 
     public void putPendingMessage(User user, Message message) {
         if(pendingMessages.containsKey(user)){
+
             Message[] temp;
 
             Message[] pendingMessageArray = pendingMessages.get(user);

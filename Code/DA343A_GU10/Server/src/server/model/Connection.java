@@ -92,7 +92,7 @@ public class Connection {
                 }
 
             } catch (Exception e){
-                e.printStackTrace();
+                System.out.println("User disconnected");
             }
         }
     }

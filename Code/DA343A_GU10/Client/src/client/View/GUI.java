@@ -1,23 +1,33 @@
 package client.View;
 
-import javax.swing.*;
-import java.awt.*;
+import client.controller.MessageClient;
 
-public class GUI extends JFrame {
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+public class GUI extends JFrame implements ActionListener {
 
     UserList userList;
     ReadPanel readPanel;
     ComposePanel composePanel;
     ButtonPanelSouth buttonPanelSouth;
+    MessageClient messageClient;
 
-    public GUI(){
+    public GUI(MessageClient messageClient){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("GuMessenger");
+
+        this.messageClient = messageClient;
 
         userList = new UserList(this);
         readPanel = new ReadPanel();
         composePanel = new ComposePanel();
-        buttonPanelSouth = new ButtonPanelSouth();
+        buttonPanelSouth = new ButtonPanelSouth(this);
 
         BorderLayout layout = new BorderLayout();
         setLayout(layout);
@@ -26,7 +36,6 @@ public class GUI extends JFrame {
         layout.setVgap(10);
 
         JScrollPane readScrollPane = new JScrollPane(readPanel);
-
 
         add(userList, BorderLayout.WEST);
         add(readScrollPane, BorderLayout.CENTER);
@@ -55,7 +64,11 @@ public class GUI extends JFrame {
     }
 
     public String getTextFromCompose(){
-        return "ex";
+        return composePanel.getTextFromTextArea();
+    }
+
+    private ImageIcon getImageFromCompose() {
+        return null;
     }
 
     public void setTextInRead(String[] text){
@@ -65,4 +78,46 @@ public class GUI extends JFrame {
     public void getNewStringArrayForChat(String user) {
         System.out.println(user);
     }
+
+    public String getUserName() {
+        return JOptionPane.showInputDialog("Please enter user name");
+    }
+
+    public ImageIcon getUserIcon() {
+        JOptionPane.showMessageDialog(null,"please select profile picture");
+        JFileChooser chooser = new JFileChooser();
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg","png","jpeg"));
+        int returnVal = chooser.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+           File file = chooser.getSelectedFile();
+           return new ImageIcon(file.getAbsolutePath());
+        }
+        return null;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        String btnSource = actionEvent.getActionCommand();
+        System.out.println(actionEvent.getActionCommand());
+        switch (btnSource){
+            case "Attach image":
+                break;
+            case "Send":
+                sendMessage();
+                break;
+            case "Add to contacts":
+                break;
+            default:
+                System.out.println("wöpsidajsy");
+        }
+    }
+
+    private void sendMessage() {
+        String text = getTextFromCompose();
+        ImageIcon image = getImageFromCompose();
+        int[] receiverIndex = userList.getSelected();
+        messageClient.sendMessage(text, image, receiverIndex);
+    }
+
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class UserList extends JPanel implements ActionListener {
 
@@ -12,6 +13,7 @@ public class UserList extends JPanel implements ActionListener {
     GUI gui;
     JScrollPane scrollPane;
     JPanel userItemPanel;
+    ArrayList<UserListItem> userListItems = new ArrayList<>();
 
     UserList(GUI gui){
         setPreferredSize(new Dimension(500,1080/6));
@@ -29,11 +31,12 @@ public class UserList extends JPanel implements ActionListener {
     }
 
     public void addUserToOnlineList(String user, ImageIcon icon, boolean online) {
-        UserListItem userListItem = new UserListItem(user,icon,online, this);
         numUsers++;
+        UserListItem userListItem = new UserListItem(user,icon,online, this,numUsers);
         userListItem.setPreferredSize(new Dimension(400,100));
         userListItem.setMaximumSize(new Dimension(400,100));
         userItemPanel.add(userListItem);
+        userListItems.add(userListItem);
     }
 
     public void reset() {
@@ -47,5 +50,19 @@ public class UserList extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         String user = (actionEvent.getActionCommand());
         gui.getNewStringArrayForChat(user);
+    }
+
+    public int[] getSelected() {
+        ArrayList<UserListItem> uli = new ArrayList<>();
+        for (UserListItem item: userListItems) {
+            if (item.isChecked()){
+                uli.add(item);
+            }
+        }
+        int[] selectedUsers = new int[uli.size()];
+        for (int i = 0; i < selectedUsers.length; i++) {
+            selectedUsers[i] = uli.get(i).getIndex();
+        }
+        return selectedUsers;
     }
 }

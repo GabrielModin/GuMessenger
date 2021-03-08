@@ -13,6 +13,6 @@ public class MessageManager implements MessageListener{
 
     @Override
     public void messageReceived(Message message) {
-
+        System.out.println("Received  : " + message.getMessage());
     }
 }

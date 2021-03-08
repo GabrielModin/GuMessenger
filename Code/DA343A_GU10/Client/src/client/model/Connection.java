@@ -26,8 +26,8 @@ public class Connection {
         oos.flush();
         ois = new ObjectInputStream(socket.getInputStream());
 
-        Send send = new Send();
-        Receive receive = new Receive();
+        send = new Send();
+        receive = new Receive();
 
         send.start();
         receive.start();
