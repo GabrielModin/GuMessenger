@@ -52,7 +52,7 @@ public class UserList extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String user = (actionEvent.getActionCommand());
-        gui.getNewStringArrayForChat(user);
+        gui.getMessage(user);
     }
 
     public int[] getSelected() {

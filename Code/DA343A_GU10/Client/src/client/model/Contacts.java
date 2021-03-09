@@ -1,6 +1,5 @@
 package client.model;
 
-
 import shared.Message;
 import shared.User;
 import java.io.*;
@@ -14,12 +13,14 @@ public class Contacts {
     public Contacts(User user) {
         this.user = user;
         contacts = new LinkedList<User>();
-        //readContactsFromFile();
+        readContactsFromFile();
     }
 
     public void createFullUserList(Message message){
         fullUserList = new LinkedList<>();
         System.out.println("creating full user list");
+
+
 
         for (User receiver: message.getReceivers()) {
             if (receiver != user){
@@ -36,6 +37,8 @@ public class Contacts {
             }
         }
 
+        fullUserList.remove(user);
+
     }
 
     public void addContact(User user) {
@@ -51,6 +54,7 @@ public class Contacts {
     }
 
     public boolean writeContactsToFile() {
+        System.out.println("writing contacts");
         String filepath = "files/contact_list_" + user.getName() + ".dat";
         boolean contactsSaved = false;
 
@@ -70,7 +74,7 @@ public class Contacts {
 
         return contactsSaved;
     }
-
+  
     public void readContactsFromFile() {
         String filepath = "files/contact_list_" + user.getName() + ".dat";
         User readContact;
@@ -85,11 +89,12 @@ public class Contacts {
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            return;
         }
+            return;
     }
+
   
-    public User[] getReceivers(int[] receiverIndex) {
+    public User[] getSelected(int[] receiverIndex) {
 
         User[] receivers = new User[receiverIndex.length];
         for (int i = 0; i < receiverIndex.length; i++) {
@@ -106,4 +111,5 @@ public class Contacts {
     public User[] getUsers() {
         return fullUserList.toArray(new User[0]);
     }
+
 }

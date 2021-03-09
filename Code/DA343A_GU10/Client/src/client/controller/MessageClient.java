@@ -7,17 +7,18 @@ import shared.User;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MessageClient {
 
     public static void main(String[] args) {
-        Scanner input  = new Scanner(System.in);
         String ip = "127.0.0.1";
         int port = 1089;
 
         MessageClient client = new MessageClient(ip, port);
-        MessageClient client2 = new MessageClient(ip, port);
+
+
     }
 
     MessageManager messageManager;
@@ -33,6 +34,9 @@ public class MessageClient {
 
             String name = gui.getUserName();
             ImageIcon icon = gui.getUserIcon();
+
+            gui.setCurrentUser(name,icon);
+
             currentUser = new User(name,icon);
             contacts = new Contacts(currentUser);
 
@@ -44,11 +48,16 @@ public class MessageClient {
         }
     }
 
-    public void sendMessage(String text, ImageIcon image, int[] receiverIndex) {
-        User[] receivers = contacts.getReceivers(receiverIndex);
-        connection.sendMessage(new Message(currentUser,receivers,text,image));
+    public void addSelectedUsersToContacts(int[] selectedUsers){
+        User[] users = contacts.getSelected(selectedUsers);
+        for (User user: users) {
+            contacts.addContact(user);
+        }
     }
-    public void refreshContactsGui(User[] users){
+
+    public void sendMessage(String text, ImageIcon image, int[] selectedUsers) {
+        User[] receivers = contacts.getSelected(selectedUsers);
+        connection.sendMessage(new Message(currentUser,receivers,text,image));
     }
 
     public void newUserListFromServer(Message message) {
@@ -63,5 +72,18 @@ public class MessageClient {
             System.out.println("adding to gui : " + user.getName());
             gui.addUserToOnlineList(user.getName(),user.getImg(),user.isOnline());
         }
+    }
+
+    public void populateReadPanelItems(String user) {
+        ArrayList<Message> messages = messageManager.getMessagesUser(user);
+
+        gui.resetReadPanel();
+        if (messages != null) {
+            for (Message message : messages) {
+
+                gui.addMessageToReadPanel(message.getSender().getName(), message.getMessage(), message.getImg(), message.getTimestamp().toString());
+            }
+        }
+
     }
 }
