@@ -91,7 +91,7 @@ public class GUI extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(null,"please select profile picture");
         JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled(false);
-        chooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg","png","jpeg"));
+        chooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg","png","jpeg","gif"));
         int returnVal = chooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
            File file = chooser.getSelectedFile();

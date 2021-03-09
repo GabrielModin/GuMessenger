@@ -88,7 +88,7 @@ public class Contacts {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("no contacts list, moving on");
         }
             return;
     }
