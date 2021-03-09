@@ -12,12 +12,12 @@ import java.util.Scanner;
 public class MessageClient {
 
     public static void main(String[] args) {
-        Scanner input  = new Scanner(System.in);
         String ip = "127.0.0.1";
         int port = 1089;
 
         MessageClient client = new MessageClient(ip, port);
-        MessageClient client2 = new MessageClient(ip, port);
+
+
     }
 
     MessageManager messageManager;
@@ -33,6 +33,9 @@ public class MessageClient {
 
             String name = gui.getUserName();
             ImageIcon icon = gui.getUserIcon();
+
+            gui.setCurrentUser(name,icon);
+
             currentUser = new User(name,icon);
             contacts = new Contacts(currentUser);
 

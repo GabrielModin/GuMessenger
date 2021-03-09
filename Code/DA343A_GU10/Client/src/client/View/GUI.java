@@ -18,7 +18,7 @@ public class GUI extends JFrame implements ActionListener {
     MessageClient messageClient;
 
     public GUI(MessageClient messageClient){
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("GuMessenger");
 
         this.messageClient = messageClient;
@@ -56,6 +56,10 @@ public class GUI extends JFrame implements ActionListener {
 
     public void addMessageToReadPanel(String name, String messageText, ImageIcon messageIcon, String timeStamp){
         readPanel.addMessage(name,messageText,messageIcon,timeStamp);
+    }
+
+    public void setCurrentUser(String username, ImageIcon icon){
+        buttonPanelSouth.setUser(username,icon);
     }
 
 

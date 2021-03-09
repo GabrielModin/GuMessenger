@@ -18,10 +18,8 @@ public class ConnectionManager implements ConnectionListener {
     @Override
     public void newConnection(User user, Connection connection) {
 
-        if(connections.containsKey(user)){
-            connections.remove(user);
-        }
-        
+        connections.remove(user);
+
         connections.put(user,connection);
 
         sendUserList();
@@ -64,5 +62,6 @@ public class ConnectionManager implements ConnectionListener {
         System.out.println("removed : " + user.getName());
         connections.remove(user);
         connections.put(user,null);
+        sendUserList();
     }
 }
