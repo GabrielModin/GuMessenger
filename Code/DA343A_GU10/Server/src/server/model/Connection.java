@@ -95,19 +95,16 @@ public class Connection {
                     System.out.println("Object received from user not instance of User");
                 }
 
+
                 while (true){
+                    System.out.println("Waiting for object from : " + user.getName());
                     Object message = inputStream.readObject();
 
                     if (message instanceof Message){
                         connectionController.messageReceived((Message) message);
 
-                        //TODO vi kommer ha en variabel sen med user s[ vi slipper g;ra dtta
-                        User[] users = ((Message) message).getReceivers();
+                        logger.info(user + " received a message");
 
-                        for (User user : users) {
-                            logger.info(user + " received a message");
-
-                        }
                     }
 
                 }

@@ -62,6 +62,7 @@ public class ConnectionManager implements ConnectionListener {
         System.out.println("removed : " + user.getName());
         connections.remove(user);
         connections.put(user,null);
+        System.out.println("Sending revised user list");
         sendUserList();
     }
 }

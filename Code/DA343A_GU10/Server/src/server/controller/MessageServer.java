@@ -9,8 +9,8 @@ import shared.User;
 public class MessageServer {
 
     public static void main(String[] args) {
-        int port = 1089;
-        MessageServer client = new MessageServer(port);
+        int port = 1090;
+        MessageServer server = new MessageServer(port);
     }
 
     ConnectionController connectionController;

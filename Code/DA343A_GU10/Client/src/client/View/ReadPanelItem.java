@@ -10,42 +10,47 @@ public class ReadPanelItem extends JPanel {
     String timestamp;
     ImageIcon img;
 
-
-    JLabel nameLabel;
+    JLabel nameTimeLabel;
     JLabel imgLabel;
     JLabel messageLabel;
-    JLabel timestampLabel;
 
     public ReadPanelItem(String name, String msg, ImageIcon img, String timestamp){
-
         this.name = name;
         this.msg = msg;
         this.img = img;
         this.timestamp = timestamp;
 
-        setLayout(new GridLayout(4,1));
+        setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
 
-        nameLabel = new JLabel(name);
-        timestampLabel = new JLabel(timestamp);
-        add(nameLabel);
-        add(timestampLabel);
+        String nameTime = String.format("%s , %s",name, timestamp);
+
+        nameTimeLabel = new JLabel(nameTime);
+        add(nameTimeLabel);
+
 
         if (img!=null){
+            setPreferredSize(new Dimension(400,200));
+            setMaximumSize(new Dimension(400,200));
             imgLabel = new JLabel(img);
-            add(imgLabel);
         }
 
         if (msg!=null){
+            setPreferredSize(new Dimension(400,200));
+            setMaximumSize(new Dimension(400,200));
             messageLabel = new JLabel(msg);
-            add(messageLabel);
         }
 
+        if (msg != null && img != null){
+            setPreferredSize(new Dimension(400,400));
+            setMaximumSize(new Dimension(400,400));
+        }
+        imgLabel.setPreferredSize(new Dimension(200,200));
+        imgLabel.setMaximumSize(new Dimension(200,200));
+
+        add(imgLabel);
+        add(messageLabel);
         setBorder(BorderFactory.createBevelBorder(1));
 
     }
-
-
-
-
 
 }

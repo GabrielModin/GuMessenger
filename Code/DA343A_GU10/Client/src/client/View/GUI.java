@@ -18,7 +18,7 @@ public class GUI extends JFrame implements ActionListener {
     MessageClient messageClient;
 
     public GUI(MessageClient messageClient){
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("GuMessenger");
 
         this.messageClient = messageClient;
@@ -72,7 +72,7 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     private ImageIcon getImageFromCompose() {
-        return null;
+        return composePanel.getImage();
     }
 
     public void resetReadPanel(){
@@ -106,6 +106,14 @@ public class GUI extends JFrame implements ActionListener {
         System.out.println(actionEvent.getActionCommand());
         switch (btnSource){
             case "Attach image":
+                JFileChooser chooser = new JFileChooser();
+                chooser.setMultiSelectionEnabled(false);
+                chooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg","png","jpeg","gif"));
+                int returnVal = chooser.showOpenDialog(null);
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = chooser.getSelectedFile();
+                    composePanel.attatchImage(new ImageIcon(file.getAbsolutePath()));
+                }
                 break;
             case "Send":
                 sendMessage();
