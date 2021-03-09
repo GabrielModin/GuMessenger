@@ -86,8 +86,8 @@ public class Contacts {
             e.printStackTrace();
         }
             return;
-        }
     }
+
   
     public User[] getReceivers(int[] receiverIndex) {
 

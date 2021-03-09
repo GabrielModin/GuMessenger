@@ -123,7 +123,7 @@ public class LoggerUI {
 
     public static void main(String[] args) {
         LoggerUI loggerUI = new LoggerUI();
-//        loggerUI.readLogFile("Code/DA343A_GU10/files/TrafficLog.log", "2021/03/05-00:00", "2021/03/09-00:00");
-        loggerUI.readLogFile("Code/DA343A_GU10/files/TrafficLog.log");
+        loggerUI.readLogFile("Code/DA343A_GU10/files/TrafficLog.log", "2021/03/09-00:00", "2021/03/09-23:00");
+
     }
 }

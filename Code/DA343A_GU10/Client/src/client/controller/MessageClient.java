@@ -7,6 +7,7 @@ import shared.User;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MessageClient {
@@ -63,5 +64,18 @@ public class MessageClient {
             System.out.println("adding to gui : " + user.getName());
             gui.addUserToOnlineList(user.getName(),user.getImg(),user.isOnline());
         }
+    }
+
+    public void populateReadPanelItems(String user) {
+        ArrayList<Message> messages = messageManager.getMessagesUser(user);
+
+        gui.resetReadPanel();
+        if (messages != null) {
+            for (Message message : messages) {
+
+                gui.addMessageToReadPanel(message.getSender().getName(), message.getMessage(), message.getImg(), message.getTimestamp().toString());
+            }
+        }
+
     }
 }
