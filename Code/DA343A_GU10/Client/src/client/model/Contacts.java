@@ -69,7 +69,7 @@ public class Contacts {
             contactsSaved = true;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("no contacts moving on");
         }
 
         return contactsSaved;
@@ -88,7 +88,7 @@ public class Contacts {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("no contacts list, moving on");
         }
             return;
     }

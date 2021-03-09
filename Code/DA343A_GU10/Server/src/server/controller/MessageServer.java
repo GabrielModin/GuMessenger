@@ -9,7 +9,7 @@ import shared.User;
 public class MessageServer {
 
     public static void main(String[] args) {
-        int port = 1090;
+        int port = 1092;
         MessageServer server = new MessageServer(port);
     }
 
