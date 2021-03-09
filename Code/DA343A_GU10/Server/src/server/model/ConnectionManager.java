@@ -3,6 +3,7 @@ package server.model;
 import shared.Message;
 import shared.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -17,10 +18,8 @@ public class ConnectionManager implements ConnectionListener {
     @Override
     public void newConnection(User user, Connection connection) {
 
-        if(connections.containsKey(user)){
-            connections.remove(user);
-        }
-        
+        connections.remove(user);
+
         connections.put(user,connection);
 
         sendUserList();
@@ -30,12 +29,19 @@ public class ConnectionManager implements ConnectionListener {
 
     private void sendUserList() {
         User[] users = connections.keySet().toArray(new User[0]);
-        Message userList = new Message(users);
+        Message userList;
 
-        for (Connection connection: connections.values()) {
-            if (connection != null) {
-                connection.sendMessage(userList);
+        ArrayList<User> receivers = new ArrayList<>();
+        for (User user : connections.keySet()) {
+            if(connections.get(user) != null) {
+                receivers.add(user);
             }
+        }
+
+        userList = new Message((receivers.toArray(new User[0])));
+
+        for (User user: userList.getReceivers()) {
+            connections.get(user).sendMessage(userList);
         }
     }
 
@@ -56,5 +62,6 @@ public class ConnectionManager implements ConnectionListener {
         System.out.println("removed : " + user.getName());
         connections.remove(user);
         connections.put(user,null);
+        sendUserList();
     }
 }

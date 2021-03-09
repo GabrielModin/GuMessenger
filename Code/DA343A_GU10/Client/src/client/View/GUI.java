@@ -3,7 +3,6 @@ package client.View;
 import client.controller.MessageClient;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,13 +18,13 @@ public class GUI extends JFrame implements ActionListener {
     MessageClient messageClient;
 
     public GUI(MessageClient messageClient){
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("GuMessenger");
 
         this.messageClient = messageClient;
 
         userList = new UserList(this);
-        readPanel = new ReadPanel();
+        readPanel = new ReadPanel(this);
         composePanel = new ComposePanel();
         buttonPanelSouth = new ButtonPanelSouth(this);
 
@@ -59,8 +58,13 @@ public class GUI extends JFrame implements ActionListener {
         readPanel.addMessage(name,messageText,messageIcon,timeStamp);
     }
 
-    public String getUserNameToAddToContacts(){
-        return "ex";
+    public void setCurrentUser(String username, ImageIcon icon){
+        buttonPanelSouth.setUser(username,icon);
+    }
+
+
+    private void addSelectedUsersToContacts() {
+        messageClient.addSelectedUsersToContacts(userList.getSelected());
     }
 
     public String getTextFromCompose(){
@@ -71,12 +75,12 @@ public class GUI extends JFrame implements ActionListener {
         return null;
     }
 
-    public void setTextInRead(String[] text){
-
+    public void resetReadPanel(){
+        readPanel.reset();
     }
 
-    public void getNewStringArrayForChat(String user) {
-        System.out.println(user);
+    public void getMessage(String user) {
+        messageClient.populateReadPanelItems(user);
     }
 
     public String getUserName() {
@@ -107,6 +111,7 @@ public class GUI extends JFrame implements ActionListener {
                 sendMessage();
                 break;
             case "Add to contacts":
+                addSelectedUsersToContacts();
                 break;
             default:
                 System.out.println("wöpsidajsy");
