@@ -1,10 +1,12 @@
 package server.model;
 
+import shared.Message;
+import shared.User;
+
 import java.io.*;
 import java.net.DatagramSocket;
 import java.net.Socket;
-import shared.User;
-import shared.Message;
+import java.util.logging.Logger;
 
 public class Connection {
 
@@ -18,9 +20,12 @@ public class Connection {
     private Socket socket;
     private ConnectionController connectionController;
 
-    Connection(Socket socket, ConnectionController connectionController){
+    private Logger logger;
+
+    Connection(Socket socket, ConnectionController connectionController, Logger logger){
         this.socket = socket;
         this.connectionController = connectionController;
+        this.logger = logger;
 
         try {
             outputStream = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
@@ -61,8 +66,10 @@ public class Connection {
         public void run() {
             try{
                 while (true){
-                    outputStream.writeObject(messageBuffer.get());
+                    Message message = messageBuffer.get();
+                    outputStream.writeObject(message);
                     outputStream.flush();
+                    logger.info(message.getSender() + " sent a message");
                 }
             } catch (IOException e){
                 e.printStackTrace();
@@ -93,6 +100,14 @@ public class Connection {
 
                     if (message instanceof Message){
                         connectionController.messageReceived((Message) message);
+
+                        //TODO vi kommer ha en variabel sen med user s[ vi slipper g;ra dtta
+                        User[] users = ((Message) message).getReceivers();
+
+                        for (User user : users) {
+                            logger.info(user + " received a message");
+
+                        }
                     }
 
                 }

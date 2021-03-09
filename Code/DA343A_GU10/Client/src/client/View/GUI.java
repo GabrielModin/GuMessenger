@@ -24,7 +24,7 @@ public class GUI extends JFrame implements ActionListener {
         this.messageClient = messageClient;
 
         userList = new UserList(this);
-        readPanel = new ReadPanel();
+        readPanel = new ReadPanel(this);
         composePanel = new ComposePanel();
         buttonPanelSouth = new ButtonPanelSouth(this);
 
@@ -75,12 +75,12 @@ public class GUI extends JFrame implements ActionListener {
         return null;
     }
 
-    public void setTextInRead(String[] text){
-
+    public void resetReadPanel(){
+        readPanel.reset();
     }
 
-    public void getNewStringArrayForChat(String user) {
-        System.out.println(user);
+    public void getMessage(String user) {
+        messageClient.populateReadPanelItems(user);
     }
 
     public String getUserName() {
