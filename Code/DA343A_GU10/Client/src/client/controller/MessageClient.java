@@ -17,10 +17,6 @@ public class MessageClient {
         int port = 1090;
 
         MessageClient client = new MessageClient(ip, port);
-        MessageClient client2 = new MessageClient(ip, port);
-        MessageClient client3 = new MessageClient(ip, port);
-
-
 
     }
 

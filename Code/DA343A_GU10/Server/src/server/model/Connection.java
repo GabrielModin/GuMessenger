@@ -72,9 +72,7 @@ public class Connection {
                     logger.info(message.getSender() + " sent a message");
                 }
             } catch (IOException e){
-                e.printStackTrace();
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -110,7 +108,6 @@ public class Connection {
                 }
 
             } catch (Exception e){
-                e.printStackTrace();
                 System.out.println("user disconected");
                 connectionController.disconnected(user);
             }
