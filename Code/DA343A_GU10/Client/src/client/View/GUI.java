@@ -3,7 +3,6 @@ package client.View;
 import client.controller.MessageClient;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -59,8 +58,9 @@ public class GUI extends JFrame implements ActionListener {
         readPanel.addMessage(name,messageText,messageIcon,timeStamp);
     }
 
-    public String getUserNameToAddToContacts(){
-        return "ex";
+
+    private void addSelectedUsersToContacts() {
+        messageClient.addSelectedUsersToContacts(userList.getSelected());
     }
 
     public String getTextFromCompose(){
@@ -107,6 +107,7 @@ public class GUI extends JFrame implements ActionListener {
                 sendMessage();
                 break;
             case "Add to contacts":
+                addSelectedUsersToContacts();
                 break;
             default:
                 System.out.println("wöpsidajsy");

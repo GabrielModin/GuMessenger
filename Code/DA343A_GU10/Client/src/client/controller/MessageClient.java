@@ -44,11 +44,16 @@ public class MessageClient {
         }
     }
 
-    public void sendMessage(String text, ImageIcon image, int[] receiverIndex) {
-        User[] receivers = contacts.getReceivers(receiverIndex);
-        connection.sendMessage(new Message(currentUser,receivers,text,image));
+    public void addSelectedUsersToContacts(int[] selectedUsers){
+        User[] users = contacts.getSelected(selectedUsers);
+        for (User user: users) {
+            contacts.addContact(user);
+        }
     }
-    public void refreshContactsGui(User[] users){
+
+    public void sendMessage(String text, ImageIcon image, int[] selectedUsers) {
+        User[] receivers = contacts.getSelected(selectedUsers);
+        connection.sendMessage(new Message(currentUser,receivers,text,image));
     }
 
     public void newUserListFromServer(Message message) {
