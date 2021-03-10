@@ -31,6 +31,8 @@ public class Connection {
 
         send.start();
         receive.start();
+
+
     }
 
     public void registerMessageListener(MessageListener listener){

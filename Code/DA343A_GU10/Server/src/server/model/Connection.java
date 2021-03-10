@@ -40,6 +40,7 @@ public class Connection {
 
         send.start();
         receive.start();
+
     }
 
     public void sendMessage(Message message){
@@ -69,7 +70,7 @@ public class Connection {
                     Message message = messageBuffer.get();
                     outputStream.writeObject(message);
                     outputStream.flush();
-                    logger.info(message.getSender() + " sent a message");
+                    logger.info(user.getName() + " received a message from : " + message.getSender()); //Denna loggar received 'ven p[ offline som ej tar emot
                 }
             } catch (IOException e){
             } catch (InterruptedException e) {
@@ -93,16 +94,18 @@ public class Connection {
                     System.out.println("Object received from user not instance of User");
                 }
 
+                logger.info(user.getName() + " connected to server");
 
                 while (true){
 
                     Object message = inputStream.readObject();
 
                     if (message instanceof Message){
-                        connectionController.messageReceived((Message) message);
+                        Message sentMessage = (Message) message;
+                        connectionController.messageReceived(sentMessage);
 
-                        for (User user : ((Message) message).getReceivers()) {
-                            logger.info(user.getName() + " received a message"); //Denna loggar received 'ven p[ offline som ej tar emot
+                        for (User receiver : ((Message) message).getReceivers()) {
+                            logger.info(sentMessage.getSender() + " sent a message to : " + receiver.getName() );
                         }
 
                     }
@@ -112,6 +115,8 @@ public class Connection {
             } catch (Exception e){
                 System.out.println("user disconected");
                 connectionController.disconnected(user);
+                logger.info(user.getName() + " disconnected from server");
+
             }
         }
     }

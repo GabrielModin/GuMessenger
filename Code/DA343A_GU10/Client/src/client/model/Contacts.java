@@ -55,7 +55,6 @@ public class Contacts {
         if(temp != null){
             for (User tempUser: temp) {
                 if (!(fullUserList.contains(tempUser))){
-                    System.out.println("adding temp user yo");
                     fullUserList.add(tempUser);
                 }
             }

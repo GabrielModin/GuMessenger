@@ -96,7 +96,8 @@ public class LoggerUI {
             endDate = sdf2.parse(inputEndDate);
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            listenForInput();
+            return;
         }
 
         for (String event : logs) {

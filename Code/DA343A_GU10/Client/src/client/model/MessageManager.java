@@ -20,8 +20,9 @@ public class MessageManager implements MessageListener{
     public void messageReceived(Message message) {
         System.out.println("Received  : " + message.getMessage());
 
-        if(message.getSender() == null){
+        if(message.getSender().getName().equals("Server")){
             messageClient.newUserListFromServer(message);
+            System.out.println("got userList");
             return;
         }
 

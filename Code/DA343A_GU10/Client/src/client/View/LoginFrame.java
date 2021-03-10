@@ -61,6 +61,10 @@ public class LoginFrame extends JFrame implements ActionListener {
                 break;
             case "Login":
                 userName = nameInput.getText();
+                if(userName.equals("Server")){
+                    JOptionPane.showMessageDialog(this,"Äe jag tror inte riktigt det va?");
+                    System.exit(0);
+                }
                 MessageClient.login(userName, userIcon);
                 dispose();
                 break;
