@@ -55,7 +55,7 @@ public class Contacts {
 
     public boolean writeContactsToFile() {
         System.out.println("writing contacts");
-        String filepath = "files/contact_list_" + user.getName() + ".dat";
+        String filepath = "Code/DA343A_GU10/files/contact_list_" + user.getName() + ".dat";
         boolean contactsSaved = false;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath))) {
@@ -76,7 +76,7 @@ public class Contacts {
     }
   
     public void readContactsFromFile() {
-        String filepath = "files/contact_list_" + user.getName() + ".dat";
+        String filepath = "Code/DA343A_GU10/files/contact_list_" + user.getName() + ".dat";
         User readContact;
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath))) {

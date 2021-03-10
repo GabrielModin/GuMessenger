@@ -101,7 +101,9 @@ public class Connection {
                     if (message instanceof Message){
                         connectionController.messageReceived((Message) message);
 
-                        logger.info(user + " received a message");
+                        for (User user : ((Message) message).getReceivers()) {
+                            logger.info(user.getName() + " received a message"); //Denna loggar received 'ven p[ offline som ej tar emot
+                        }
 
                     }
 
