@@ -5,15 +5,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class UserList extends JPanel implements ActionListener {
 
-    BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
-    int numUsers = 0;
-    GUI gui;
-    JScrollPane scrollPane;
-    JPanel userItemPanel;
-    ArrayList<UserListItem> userListItems = new ArrayList<>();
+    private BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+    private int numUsers = 0;
+    private GUI gui;
+    private JScrollPane scrollPane;
+    private JPanel userItemPanel;
+    private ArrayList<UserListItem> userListItems = new ArrayList<>();
+
 
     UserList(GUI gui){
         setPreferredSize(new Dimension(500,1080/6));
@@ -43,10 +45,16 @@ public class UserList extends JPanel implements ActionListener {
 
     public void reset() {
         numUsers = 0;
-        for (Component component: userItemPanel.getComponents()) {
+        for (Component component : userItemPanel.getComponents()) {
+            if (component instanceof UserListItem){
+                UserListItem uli = (UserListItem) component;
+                uli.setIsSelected(false);
+                userListItems.remove(uli);
+            }
             userItemPanel.remove(component);
         }
-
+        revalidate();
+        repaint();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package client.View;
 
 import client.controller.MessageClient;
+import shared.User;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,11 +14,11 @@ import java.io.File;
 
 public class GUI extends JFrame implements ActionListener {
 
-    UserList userList;
-    ReadPanel readPanel;
-    ComposePanel composePanel;
-    ButtonPanelSouth buttonPanelSouth;
-    MessageClient messageClient;
+    private UserList userList;
+    private ReadPanel readPanel;
+    private ComposePanel composePanel;
+    private ButtonPanelSouth buttonPanelSouth;
+    private MessageClient messageClient;
 
     public GUI(MessageClient messageClient){
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -36,10 +37,8 @@ public class GUI extends JFrame implements ActionListener {
         layout.setHgap(10);
         layout.setVgap(10);
 
-        JScrollPane readScrollPane = new JScrollPane(readPanel);
-
         add(userList, BorderLayout.WEST);
-        add(readScrollPane, BorderLayout.CENTER);
+        add(readPanel, BorderLayout.CENTER);
         add(composePanel, BorderLayout.EAST);
         add(buttonPanelSouth, BorderLayout.SOUTH);
 
@@ -55,8 +54,6 @@ public class GUI extends JFrame implements ActionListener {
         setResizable(true);
         setVisible(true);
     }
-
-
 
     public void userListReset(){
         userList.reset();
@@ -74,9 +71,12 @@ public class GUI extends JFrame implements ActionListener {
         buttonPanelSouth.setUser(username,icon);
     }
 
-
     private void addSelectedUsersToContacts() {
         messageClient.addSelectedUsersToContacts(userList.getSelected());
+    }
+
+    private void removeSelectedUsersFromContacts() {
+        messageClient.removeSelectedUsersFromContacts(userList.getSelected());
     }
 
     public String getTextFromCompose(){
@@ -99,7 +99,16 @@ public class GUI extends JFrame implements ActionListener {
         return JOptionPane.showInputDialog("Please enter user name");
     }
 
+    private void sendMessage() {
+        String text = getTextFromCompose();
+        ImageIcon image = getImageFromCompose();
+        int[] receiverIndex = userList.getSelected();
+        messageClient.sendMessage(text, image, receiverIndex);
+    }
 
+    public void newMessageNotification(String sender) {
+        buttonPanelSouth.newMessageNotification(sender);
+    }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
@@ -119,19 +128,14 @@ public class GUI extends JFrame implements ActionListener {
             case "Send":
                 sendMessage();
                 break;
-            case "Add to contacts":
+            case "Add":
                 addSelectedUsersToContacts();
+                break;
+            case "Remove":
+                removeSelectedUsersFromContacts();
                 break;
             default:
                 System.out.println("wöpsidajsy");
         }
     }
-
-    private void sendMessage() {
-        String text = getTextFromCompose();
-        ImageIcon image = getImageFromCompose();
-        int[] receiverIndex = userList.getSelected();
-        messageClient.sendMessage(text, image, receiverIndex);
-    }
-
 }

@@ -14,9 +14,7 @@ import java.util.Scanner;
 public class MessageClient {
 
     public static void main(String[] args) {
-
-        LoginFrame login = new LoginFrame();
-        LoginFrame login2 = new LoginFrame();
+        new LoginFrame();
     }
 
     static String ip = "127.0.0.1";
@@ -25,13 +23,12 @@ public class MessageClient {
     public static void login(String userName, ImageIcon userIcon) {
         MessageClient client = new MessageClient(ip,port,new User(userName,userIcon));
     }
-    MessageManager messageManager;
-    Connection connection;
-    GUI gui;
-    Contacts contacts;
-    User currentUser;
 
-
+    private MessageManager messageManager;
+    private Connection connection;
+    private GUI gui;
+    private Contacts contacts;
+    private User currentUser;
 
     MessageClient(String ip, int port, User user){
 
@@ -60,7 +57,9 @@ public class MessageClient {
 
     public void sendMessage(String text, ImageIcon image, int[] selectedUsers) {
         User[] receivers = contacts.getSelected(selectedUsers);
-        connection.sendMessage(new Message(currentUser,receivers,text,image));
+        Message messageToSend = new Message(currentUser,receivers,text,image);
+        connection.sendMessage(messageToSend);
+        messageManager.sentNewMessage(messageToSend);
     }
 
     public void newUserListFromServer(Message message) {
@@ -91,6 +90,7 @@ public class MessageClient {
     }
 
     public void exit() {
+        gui.dispose();
         try {
             connection.disconnect();
         } catch (IOException e){
@@ -99,4 +99,20 @@ public class MessageClient {
     }
 
 
+    public void removeSelectedUsersFromContacts(int[] selected) {
+        User[] users = contacts.getSelected(selected);
+        for (User user: users) {
+            contacts.removeContact(user);
+        }
+        resetGuiUserList(contacts.getUsers());
+    }
+
+    public void notifyNewMessage(User sender) {
+        gui.newMessageNotification(sender.getName());
+        if (!(contacts.contains(sender))){
+            System.out.println("adding temp use item");
+            contacts.addTemporaryUserItem(sender);
+        }
+        resetGuiUserList(contacts.getUsers());
+    }
 }

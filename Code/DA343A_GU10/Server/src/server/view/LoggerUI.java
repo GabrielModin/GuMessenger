@@ -86,8 +86,6 @@ public class LoggerUI {
             e.printStackTrace();
         }
 
-        long startDateMillis = 0;
-        long endDateMillis = 0;
         Date startDate = null;
         Date endDate = null;
 
@@ -95,15 +93,11 @@ public class LoggerUI {
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd-HH:mm");
         try {
             startDate = sdf1.parse(inputStartDate);
-            startDateMillis = startDate.getTime();
-
             endDate = sdf2.parse(inputEndDate);
-            endDateMillis = endDate.getTime();
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
 
         for (String event : logs) {
             String[] eventArr = event.split(",");

@@ -8,14 +8,14 @@ import java.awt.event.ActionListener;
 public class UserListItem extends JPanel {
 
     private int index;
-    ImageIcon icon;
-    String name;
-    boolean online;
+    private ImageIcon icon;
+    private String name;
+    private boolean online;
 
-    JLabel iconLabel;
-    JButton nameButton;
-    JLabel onlineLabel;
-    JCheckBox selected;
+    private JLabel iconLabel;
+    private JButton nameButton;
+    private JLabel onlineLabel;
+    private JCheckBox selected;
 
     UserListItem(String name, ImageIcon icon, boolean online, UserList userList, int numUsers){
 
@@ -50,5 +50,9 @@ public class UserListItem extends JPanel {
 
     public boolean isChecked() {
         return selected.isSelected();
+    }
+
+    public void setIsSelected(boolean b) {
+        selected.setSelected(b);
     }
 }

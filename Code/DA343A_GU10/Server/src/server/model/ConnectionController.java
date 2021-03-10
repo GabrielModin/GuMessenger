@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 public class ConnectionController extends Thread {
 
     private ServerSocket serverSocket;
-    ConnectionManager connectionManager;
-    ConnectionListener connectionListener;
-    MessageListener messageListener;
+    private ConnectionManager connectionManager;
+    private ConnectionListener connectionListener;
+    private MessageListener messageListener;
 
     private FileHandler fh;
     private Logger logger = Logger.getLogger(Connection.class.getName());
@@ -29,7 +29,7 @@ public class ConnectionController extends Thread {
         registerMessageListener(connectionManager.getMessageListener());
 
         try {
-            fh = new FileHandler("Code/DA343A_GU10/files/TrafficLog.log");
+            fh = new FileHandler("files/TrafficLog.log");
             logger.addHandler(fh);
 
             serverSocket = new ServerSocket(port);

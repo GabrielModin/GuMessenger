@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Message implements Serializable {
+
     private ImageIcon img = null;
     private String message = null;
     private Date timestamp = new Date();
@@ -15,6 +16,7 @@ public class Message implements Serializable {
         this.sender = sender;
         this.receivers = receivers;
     }
+
     public Message(User sender, User[] receivers, String message, ImageIcon img){
         this(sender, receivers);
         this.message = message;
@@ -32,12 +34,11 @@ public class Message implements Serializable {
         this.img = img;
         this.message = null;
     }
+
     public Message(User[] receivers){
         this(null, receivers);
         setMessage("contactList");
     }
-
-
 
     //Getters and setters//
     public ImageIcon getImg() {

@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 
 public class Connection {
 
-    Send send;
-    Receive receive;
-    User user;
+    private Send send;
+    private Receive receive;
+    private User user;
 
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
@@ -56,7 +56,7 @@ public class Connection {
 
     private class Send extends Thread{
 
-        Buffer<Message> messageBuffer = new Buffer<>();
+        private Buffer<Message> messageBuffer = new Buffer<>();
 
         public void sendMessage(Message message){
             messageBuffer.put(message);
@@ -95,7 +95,7 @@ public class Connection {
 
 
                 while (true){
-                    System.out.println("Waiting for object from : " + user.getName());
+
                     Object message = inputStream.readObject();
 
                     if (message instanceof Message){

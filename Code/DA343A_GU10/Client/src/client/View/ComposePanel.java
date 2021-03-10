@@ -5,9 +5,8 @@ import java.awt.*;
 
 public class ComposePanel extends JPanel {
 
-    JTextArea textArea;
-
-    ImageIcon messageIcon = null;
+    private JTextArea textArea;
+    private ImageIcon messageIcon = null;
 
     ComposePanel(){
         setPreferredSize(new Dimension(500,Integer.MAX_VALUE));

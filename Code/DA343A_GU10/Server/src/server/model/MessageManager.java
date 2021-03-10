@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 public class MessageManager extends Thread implements MessageListener {
 
-    Buffer<Message> messageBuffer = new Buffer<>();
+    private Buffer<Message> messageBuffer = new Buffer<>();
     private HashMap<User, Message[]> pendingMessages = new HashMap<>();
-    ConnectionManager connectionManager;
+    private ConnectionManager connectionManager;
 
     public MessageManager(ConnectionManager connectionManager){
         this.connectionManager = connectionManager;
@@ -25,7 +25,9 @@ public class MessageManager extends Thread implements MessageListener {
 
     private void send(Message[] message, User user) {
         for (Message msg : message){
-            connectionManager.send(user , msg);
+            if (msg != null){
+                connectionManager.send(user , msg);
+            }
         }
     }
 
@@ -47,39 +49,51 @@ public class MessageManager extends Thread implements MessageListener {
     }
 
     public void sendPendingMessages(User user) {
-        System.out.println("checking pending messages for : " + user.getName());
 
         if (pendingMessages.containsKey(user)) {
-
-            System.out.println(user.getName() + "has pending messages");
 
             Message[] message = pendingMessages.get(user);
             send(message, user);
 
             pendingMessages.remove(user);
-
-            return;
         }
-        System.out.println(user.getName() + " has no messages ");
     }
 
     public void putPendingMessage(User user, Message message) {
+        System.out.println(user.getName() + " has pending : " + pendingMessages.containsKey(user));
         if(pendingMessages.containsKey(user)){
 
-            Message[] temp;
+            if (message == null){
+                System.out.println("message is null");
+
+            }else {
+                System.out.println("message not null");
+            }
 
             Message[] pendingMessageArray = pendingMessages.get(user);
-            temp = new Message[pendingMessageArray.length+1];
-            temp[pendingMessageArray.length+1] = message;
+            Message[] temp = new Message[pendingMessageArray.length+1];
+
+            System.out.println("pendingMessageLength : " + pendingMessageArray.length);
+
+            System.arraycopy(pendingMessageArray,0, temp,0,pendingMessageArray.length);
+
+            temp[pendingMessageArray.length] = message;
             pendingMessageArray = temp;
 
             pendingMessages.remove(user);
             pendingMessages.put(user,pendingMessageArray);
+
+            for (Message messages: pendingMessages.get(user)) {
+                System.out.println(messages.getMessage());
+            }
+
         } else {
+
             Message[] pendingMessageArray = new Message[1];
             pendingMessageArray[0] = message;
 
             pendingMessages.put(user, pendingMessageArray);
+
         }
     }
 }
