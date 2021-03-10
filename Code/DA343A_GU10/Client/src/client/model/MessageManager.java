@@ -33,7 +33,6 @@ public class MessageManager implements MessageListener{
         temp.add(message);
         messageMap.put(message.getSender(), temp);
         newMessage(message);
-
     }
 
     private void newMessage(Message message) {

@@ -62,7 +62,6 @@ public class Contacts {
         }
 
         fullUserList.remove(user);
-
     }
 
     public void addContact(User user) {
@@ -119,7 +118,6 @@ public class Contacts {
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("no contacts list, moving on");
         }
-            return;
     }
 
 
@@ -130,8 +128,8 @@ public class Contacts {
             receivers[i] = fullUserList.get(receiverIndex[i]);
         }
         return receivers;
-
     }
+
     public String toString() {
         return "hajsan :)";
     }

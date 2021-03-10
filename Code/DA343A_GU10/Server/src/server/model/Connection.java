@@ -71,8 +71,8 @@ public class Connection {
                     outputStream.flush();
                     logger.info(message.getSender() + " sent a message");
                 }
-            } catch (IOException e){
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e){
+
             }
         }
     }
@@ -81,8 +81,8 @@ public class Connection {
 
         @Override
         public void run() {
-            try{
 
+            try{
                 Object object = inputStream.readObject();
 
                 if (object instanceof User){
@@ -92,7 +92,6 @@ public class Connection {
                 } else {
                     System.out.println("Object received from user not instance of User");
                 }
-
 
                 while (true){
 
@@ -104,11 +103,8 @@ public class Connection {
                         for (User user : ((Message) message).getReceivers()) {
                             logger.info(user.getName() + " received a message"); //Denna loggar received 'ven p[ offline som ej tar emot
                         }
-
                     }
-
                 }
-
             } catch (Exception e){
                 System.out.println("user disconected");
                 connectionController.disconnected(user);

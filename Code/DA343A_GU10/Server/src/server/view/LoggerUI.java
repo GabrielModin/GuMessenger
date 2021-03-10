@@ -25,7 +25,6 @@ public class LoggerUI {
         }
     }
 
-
     public void readLogFile(String filepath) {
         String logMessage = null;
         String millis = null;
@@ -55,8 +54,7 @@ public class LoggerUI {
             e.printStackTrace();
         }
     }
-
-
+    
     //Date in format YYYY/MM/DD-HH:MM
     public void readLogFile(String filepath, String inputStartDate, String inputEndDate) {
         String logMessage = null;

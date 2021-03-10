@@ -19,7 +19,6 @@ public class ConnectionManager implements ConnectionListener {
     public void newConnection(User user, Connection connection) {
 
         connections.remove(user);
-
         connections.put(user,connection);
 
         sendUserList();

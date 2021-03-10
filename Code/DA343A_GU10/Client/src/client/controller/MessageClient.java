@@ -86,7 +86,6 @@ public class MessageClient {
                 gui.addMessageToReadPanel(message.getSender().getName(), message.getMessage(), message.getImg(), message.getTimestamp().toString());
             }
         }
-
     }
 
     public void exit() {

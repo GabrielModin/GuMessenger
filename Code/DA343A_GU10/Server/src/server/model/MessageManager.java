@@ -49,7 +49,6 @@ public class MessageManager extends Thread implements MessageListener {
     }
 
     public void sendPendingMessages(User user) {
-
         if (pendingMessages.containsKey(user)) {
 
             Message[] message = pendingMessages.get(user);
@@ -66,7 +65,7 @@ public class MessageManager extends Thread implements MessageListener {
             if (message == null){
                 System.out.println("message is null");
 
-            }else {
+            } else {
                 System.out.println("message not null");
             }
 
@@ -86,14 +85,12 @@ public class MessageManager extends Thread implements MessageListener {
             for (Message messages: pendingMessages.get(user)) {
                 System.out.println(messages.getMessage());
             }
-
         } else {
 
             Message[] pendingMessageArray = new Message[1];
             pendingMessageArray[0] = message;
 
             pendingMessages.put(user, pendingMessageArray);
-
         }
     }
 }

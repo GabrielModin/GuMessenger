@@ -1,6 +1,5 @@
 package client.model;
 
-import client.controller.MessageClient;
 import shared.Message;
 import shared.User;
 import java.io.IOException;
