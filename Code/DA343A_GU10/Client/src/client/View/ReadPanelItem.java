@@ -26,29 +26,35 @@ public class ReadPanelItem extends JPanel {
 
         nameTimeLabel = new JLabel(nameTime);
         add(nameTimeLabel);
+        imgLabel = new JLabel(img);
+        messageLabel = new JLabel(msg);
+        imgLabel.setPreferredSize(new Dimension(200,200));
+        imgLabel.setMaximumSize(new Dimension(200,200));
 
-
-        if (img!=null){
+        if (img!=null && msg==null){
             setPreferredSize(new Dimension(400,200));
             setMaximumSize(new Dimension(400,200));
-            imgLabel = new JLabel(img);
+            add(imgLabel);
         }
 
-        if (msg!=null){
+        if (msg!=null && img==null){
             setPreferredSize(new Dimension(400,200));
             setMaximumSize(new Dimension(400,200));
-            messageLabel = new JLabel(msg);
+            add(messageLabel);
         }
 
         if (msg != null && img != null){
             setPreferredSize(new Dimension(400,400));
             setMaximumSize(new Dimension(400,400));
-        }
-        imgLabel.setPreferredSize(new Dimension(200,200));
-        imgLabel.setMaximumSize(new Dimension(200,200));
 
-        add(imgLabel);
-        add(messageLabel);
+            imgLabel = new JLabel(img);
+            messageLabel = new JLabel(msg);
+
+            add(imgLabel);
+            add(messageLabel);
+        }
+
+
         setBorder(BorderFactory.createBevelBorder(1));
 
     }
