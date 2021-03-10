@@ -37,10 +37,10 @@ public class GUI extends JFrame implements ActionListener {
         layout.setHgap(10);
         layout.setVgap(10);
 
-        JScrollPane readScrollPane = new JScrollPane(readPanel);
+//        JScrollPane readScrollPane = new JScrollPane(readPanel);
 
         add(userList, BorderLayout.WEST);
-        add(readScrollPane, BorderLayout.CENTER);
+        add(readPanel, BorderLayout.CENTER);
         add(composePanel, BorderLayout.EAST);
         add(buttonPanelSouth, BorderLayout.SOUTH);
 

@@ -15,7 +15,6 @@ public class MessageClient {
 
     public static void main(String[] args) {
         new LoginFrame();
-        new LoginFrame();
     }
 
     static String ip = "127.0.0.1";

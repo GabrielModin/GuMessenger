@@ -13,7 +13,7 @@ public class ReadPanel extends JPanel {
     JPanel readPanelItem;
 
     ReadPanel(GUI gui){
-        setPreferredSize(new Dimension(500,1080/6));
+        setPreferredSize(new Dimension(450,800));
         setBackground(Color.BLACK);
         setLayout(layout);
 
