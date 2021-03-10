@@ -26,6 +26,7 @@ public class ReadPanelItem extends JPanel {
 
         nameTimeLabel = new JLabel(nameTime);
         add(nameTimeLabel);
+        
         imgLabel = new JLabel(img);
         messageLabel = new JLabel(msg);
         imgLabel.setPreferredSize(new Dimension(200,200));
