@@ -23,13 +23,12 @@ public class MessageClient {
     public static void login(String userName, ImageIcon userIcon) {
         MessageClient client = new MessageClient(ip,port,new User(userName,userIcon));
     }
-    MessageManager messageManager;
-    Connection connection;
-    GUI gui;
-    Contacts contacts;
-    User currentUser;
 
-
+    private MessageManager messageManager;
+    private Connection connection;
+    private GUI gui;
+    private Contacts contacts;
+    private User currentUser;
 
     MessageClient(String ip, int port, User user){
 

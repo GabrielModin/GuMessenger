@@ -14,11 +14,11 @@ import java.io.File;
 
 public class GUI extends JFrame implements ActionListener {
 
-    UserList userList;
-    ReadPanel readPanel;
-    ComposePanel composePanel;
-    ButtonPanelSouth buttonPanelSouth;
-    MessageClient messageClient;
+    private UserList userList;
+    private ReadPanel readPanel;
+    private ComposePanel composePanel;
+    private ButtonPanelSouth buttonPanelSouth;
+    private MessageClient messageClient;
 
     public GUI(MessageClient messageClient){
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -36,8 +36,6 @@ public class GUI extends JFrame implements ActionListener {
 
         layout.setHgap(10);
         layout.setVgap(10);
-
-//        JScrollPane readScrollPane = new JScrollPane(readPanel);
 
         add(userList, BorderLayout.WEST);
         add(readPanel, BorderLayout.CENTER);
@@ -57,8 +55,6 @@ public class GUI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-
-
     public void userListReset(){
         userList.reset();
     }
@@ -74,7 +70,6 @@ public class GUI extends JFrame implements ActionListener {
     public void setCurrentUser(String username, ImageIcon icon){
         buttonPanelSouth.setUser(username,icon);
     }
-
 
     private void addSelectedUsersToContacts() {
         messageClient.addSelectedUsersToContacts(userList.getSelected());
@@ -104,7 +99,16 @@ public class GUI extends JFrame implements ActionListener {
         return JOptionPane.showInputDialog("Please enter user name");
     }
 
+    private void sendMessage() {
+        String text = getTextFromCompose();
+        ImageIcon image = getImageFromCompose();
+        int[] receiverIndex = userList.getSelected();
+        messageClient.sendMessage(text, image, receiverIndex);
+    }
 
+    public void newMessageNotification(String sender) {
+        buttonPanelSouth.newMessageNotification(sender);
+    }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
@@ -133,16 +137,5 @@ public class GUI extends JFrame implements ActionListener {
             default:
                 System.out.println("wöpsidajsy");
         }
-    }
-
-    private void sendMessage() {
-        String text = getTextFromCompose();
-        ImageIcon image = getImageFromCompose();
-        int[] receiverIndex = userList.getSelected();
-        messageClient.sendMessage(text, image, receiverIndex);
-    }
-
-    public void newMessageNotification(String sender) {
-        buttonPanelSouth.newMessageNotification(sender);
     }
 }

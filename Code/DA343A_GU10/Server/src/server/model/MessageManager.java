@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 public class MessageManager extends Thread implements MessageListener {
 
-    Buffer<Message> messageBuffer = new Buffer<>();
+    private Buffer<Message> messageBuffer = new Buffer<>();
     private HashMap<User, Message[]> pendingMessages = new HashMap<>();
-    ConnectionManager connectionManager;
+    private ConnectionManager connectionManager;
 
     public MessageManager(ConnectionManager connectionManager){
         this.connectionManager = connectionManager;
@@ -69,7 +69,6 @@ public class MessageManager extends Thread implements MessageListener {
             }else {
                 System.out.println("message not null");
             }
-
 
             Message[] pendingMessageArray = pendingMessages.get(user);
             Message[] temp = new Message[pendingMessageArray.length+1];

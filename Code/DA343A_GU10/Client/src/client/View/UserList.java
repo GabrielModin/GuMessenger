@@ -9,12 +9,12 @@ import java.util.LinkedList;
 
 public class UserList extends JPanel implements ActionListener {
 
-    BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
-    int numUsers = 0;
-    GUI gui;
-    JScrollPane scrollPane;
-    JPanel userItemPanel;
-    ArrayList<UserListItem> userListItems = new ArrayList<>();
+    private BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+    private int numUsers = 0;
+    private GUI gui;
+    private JScrollPane scrollPane;
+    private JPanel userItemPanel;
+    private ArrayList<UserListItem> userListItems = new ArrayList<>();
 
 
     UserList(GUI gui){

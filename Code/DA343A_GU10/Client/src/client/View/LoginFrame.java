@@ -11,9 +11,9 @@ import java.io.File;
 
 public class LoginFrame extends JFrame implements ActionListener {
 
-    String userName;
-    ImageIcon userIcon;
-    TextField nameInput;
+    private String userName;
+    private ImageIcon userIcon;
+    private TextField nameInput;
 
 
     public LoginFrame(){

@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 public class ConnectionController extends Thread {
 
     private ServerSocket serverSocket;
-    ConnectionManager connectionManager;
-    ConnectionListener connectionListener;
-    MessageListener messageListener;
+    private ConnectionManager connectionManager;
+    private ConnectionListener connectionListener;
+    private MessageListener messageListener;
 
     private FileHandler fh;
     private Logger logger = Logger.getLogger(Connection.class.getName());

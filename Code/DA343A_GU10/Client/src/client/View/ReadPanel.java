@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class ReadPanel extends JPanel {
 
-    BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+    private BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
 
-    GUI gui;
-    JScrollPane scrollPane;
-    JPanel readPanelItem;
+    private GUI gui;
+    private JScrollPane scrollPane;
+    private JPanel readPanelItem;
 
     ReadPanel(GUI gui){
         setPreferredSize(new Dimension(450,800));

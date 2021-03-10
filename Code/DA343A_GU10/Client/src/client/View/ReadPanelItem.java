@@ -5,14 +5,13 @@ import java.awt.*;
 
 public class ReadPanelItem extends JPanel {
 
-    String name;
-    String msg;
-    String timestamp;
-    ImageIcon img;
-
-    JLabel nameTimeLabel;
-    JLabel imgLabel;
-    JTextArea messageLabel;
+    private String name;
+    private String msg;
+    private String timestamp;
+    private ImageIcon img;
+    private JLabel nameTimeLabel;
+    private JLabel imgLabel;
+    private JTextArea messageLabel;
 
     public ReadPanelItem(String name, String msg, ImageIcon img, String timestamp){
 
@@ -37,11 +36,9 @@ public class ReadPanelItem extends JPanel {
 
         nameTimeLabel = new JLabel(nameTime);
         senderPanel.add(nameTimeLabel);
-        if (img != null) {
-            Image image = img.getImage().getScaledInstance(imagePanel.getWidth(), imagePanel.getHeight(), Image.SCALE_SMOOTH);
-            ImageIcon icon = new ImageIcon(image);
-            imgLabel = new JLabel(icon);
-        }
+
+        imgLabel = new JLabel();
+
         messageLabel = new JTextArea(5,30);
         messageLabel.setWrapStyleWord(true);
         messageLabel.setLineWrap(true);
@@ -49,9 +46,10 @@ public class ReadPanelItem extends JPanel {
         messageLabel.setOpaque(false);
         messageLabel.setEditable(false);
         messageLabel.setFocusable(false);
+
         imgLabel.setPreferredSize(new Dimension(200,200));
         imgLabel.setMaximumSize(new Dimension(200,200));
-
+        imgLabel.setIcon(scaleImage(img));
 
         if (img!=null && msg==null){
             setPreferredSize(new Dimension(width,200));
@@ -79,6 +77,13 @@ public class ReadPanelItem extends JPanel {
         add(textPanel);
 
         setBorder(BorderFactory.createBevelBorder(1));
+
+    }
+
+    public ImageIcon scaleImage(ImageIcon imageIcon){
+        Image image = imageIcon.getImage();
+        Image imageScaled = image.getScaledInstance(200,200,Image.SCALE_SMOOTH);
+        return new ImageIcon(imageScaled);
 
     }
 

@@ -6,11 +6,11 @@ import java.io.*;
 import java.util.LinkedList;
 
 public class Contacts {
-    User user;
-    LinkedList<User> contacts;
-    LinkedList<User> fullUserList;
-    LinkedList<User> temp = null;
-    Message lastUserListFromServer;
+    private User user;
+    private LinkedList<User> contacts;
+    private LinkedList<User> fullUserList;
+    private LinkedList<User> temp = null;
+    private Message lastUserListFromServer;
 
     public Contacts(User user) {
         this.user = user;

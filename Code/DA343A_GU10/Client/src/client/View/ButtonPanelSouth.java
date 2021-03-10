@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class ButtonPanelSouth extends JPanel {
 
-    JLabel currentUserName;
-    JLabel currentUserIcon;
-    JLabel messageNotification;
+    private JLabel currentUserName;
+    private JLabel currentUserIcon;
+    private JLabel messageNotification;
 
     ButtonPanelSouth(GUI gui){
         BorderLayout layout = new BorderLayout();
