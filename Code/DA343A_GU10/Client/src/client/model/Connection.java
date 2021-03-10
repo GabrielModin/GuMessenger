@@ -64,7 +64,6 @@ public class Connection {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
 
         }
@@ -79,15 +78,17 @@ public class Connection {
                 while (true) {
                     Message msgReceived = (Message) ois.readObject();
                     listener.messageReceived(msgReceived);
-                    //någon metod för att visa i UI;
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("disconnected");
             }
         }
     }
+
     public void disconnect() throws IOException {
         socket.close();
+        send.interrupt();
+        receive.interrupt();
     }
 }
