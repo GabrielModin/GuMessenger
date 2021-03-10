@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.View.GUI;
+import client.View.LoginFrame;
 import client.model.*;
 import shared.Message;
 import shared.User;
@@ -13,35 +14,37 @@ import java.util.Scanner;
 public class MessageClient {
 
     public static void main(String[] args) {
-        String ip = "127.0.0.1";
-        int port = 1092;
 
-        MessageClient client = new MessageClient(ip, port);
-
+        LoginFrame login = new LoginFrame();
     }
 
+    static String ip = "127.0.0.1";
+    static int port = 1092;
+
+    public static void login(String userName, ImageIcon userIcon) {
+        MessageClient client = new MessageClient(ip,port,new User(userName,userIcon));
+    }
     MessageManager messageManager;
     Connection connection;
     GUI gui;
     Contacts contacts;
     User currentUser;
 
-    MessageClient(String ip, int port){
+
+
+    MessageClient(String ip, int port, User user){
 
         try {
             gui = new GUI(this);
 
-            String name = gui.getUserName();
-            ImageIcon icon = gui.getUserIcon();
-
-            gui.setCurrentUser(name,icon);
-
-            currentUser = new User(name,icon);
+            gui.setCurrentUser(user.getName(),user.getImg());
+            currentUser = user;
             contacts = new Contacts(currentUser);
-
             messageManager = new MessageManager(this);
+
             connection = new Connection(ip, port, currentUser);
             connection.registerMessageListener(messageManager);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,4 +88,14 @@ public class MessageClient {
         }
 
     }
+
+    public void exit() {
+        try {
+            connection.disconnect();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
 }

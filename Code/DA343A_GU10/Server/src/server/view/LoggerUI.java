@@ -10,11 +10,6 @@ import java.util.Date;
 
 public class LoggerUI {
 
-    public LoggerUI() {
-
-    }
-
-
     public void printRawLogFile(String filepath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
             String logRow = br.readLine();
