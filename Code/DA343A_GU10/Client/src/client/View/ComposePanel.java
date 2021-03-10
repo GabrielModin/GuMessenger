@@ -13,7 +13,7 @@ public class ComposePanel extends JPanel {
         setPreferredSize(new Dimension(500,Integer.MAX_VALUE));
 
         textArea = new JTextArea(1,1);
-        textArea.setPreferredSize(new Dimension(400,Integer.MAX_VALUE));
+        textArea.setPreferredSize(new Dimension(400,800));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
