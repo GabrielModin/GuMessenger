@@ -73,7 +73,6 @@ public class LoginFrame extends JFrame implements ActionListener {
     }
 
     private void getProfilePicture() {
-            JOptionPane.showMessageDialog(null,"please select profile picture");
             JFileChooser chooser = new JFileChooser();
             chooser.setMultiSelectionEnabled(false);
             chooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg","png","jpeg","gif"));
