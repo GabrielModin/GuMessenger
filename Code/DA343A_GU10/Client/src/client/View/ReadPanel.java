@@ -22,13 +22,18 @@ public class ReadPanel extends JPanel {
 
         readPanelItem.setLayout(userItemPanelLayout);
         scrollPane = new JScrollPane(readPanelItem);
+
+
+
         add(scrollPane);
 
         this.gui = gui;
     }
 
     public void addMessage(String name, String messageText, ImageIcon messageIcon, String timeStamp) {
-        readPanelItem.add(new ReadPanelItem(name, messageText, messageIcon, timeStamp));
+        ReadPanelItem panelItem = new ReadPanelItem(name, messageText, messageIcon, timeStamp);
+
+        readPanelItem.add(panelItem);
         revalidate();
         repaint();
     }

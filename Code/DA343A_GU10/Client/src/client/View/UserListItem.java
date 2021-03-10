@@ -28,7 +28,7 @@ public class UserListItem extends JPanel {
         if (icon!=null){
             iconLabel = new JLabel(icon);
         } else {
-            iconLabel = new JLabel(new ImageIcon("files/noImg.png"));
+            iconLabel = new JLabel(new ImageIcon("files/icon/giphy.gif"));
         }
         nameButton = new JButton(name);
         onlineLabel = new JLabel("" + online);

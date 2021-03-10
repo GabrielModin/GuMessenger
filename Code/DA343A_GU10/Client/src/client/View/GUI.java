@@ -7,6 +7,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 public class GUI extends JFrame implements ActionListener {
@@ -41,10 +43,20 @@ public class GUI extends JFrame implements ActionListener {
         add(composePanel, BorderLayout.EAST);
         add(buttonPanelSouth, BorderLayout.SOUTH);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                messageClient.exit();
+            }
+        });
+
+
         setMinimumSize(new Dimension(1500,800));
         setResizable(true);
         setVisible(true);
     }
+
+
 
     public void userListReset(){
         userList.reset();
@@ -72,7 +84,7 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     private ImageIcon getImageFromCompose() {
-        return null;
+        return composePanel.getImage();
     }
 
     public void resetReadPanel(){
@@ -87,18 +99,7 @@ public class GUI extends JFrame implements ActionListener {
         return JOptionPane.showInputDialog("Please enter user name");
     }
 
-    public ImageIcon getUserIcon() {
-        JOptionPane.showMessageDialog(null,"please select profile picture");
-        JFileChooser chooser = new JFileChooser();
-        chooser.setMultiSelectionEnabled(false);
-        chooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg","png","jpeg"));
-        int returnVal = chooser.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-           File file = chooser.getSelectedFile();
-           return new ImageIcon(file.getAbsolutePath());
-        }
-        return null;
-    }
+
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
@@ -106,6 +107,14 @@ public class GUI extends JFrame implements ActionListener {
         System.out.println(actionEvent.getActionCommand());
         switch (btnSource){
             case "Attach image":
+                JFileChooser chooser = new JFileChooser();
+                chooser.setMultiSelectionEnabled(false);
+                chooser.setFileFilter(new FileNameExtensionFilter("Image files", "jpg","png","jpeg","gif"));
+                int returnVal = chooser.showOpenDialog(null);
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = chooser.getSelectedFile();
+                    composePanel.attatchImage(new ImageIcon(file.getAbsolutePath()));
+                }
                 break;
             case "Send":
                 sendMessage();

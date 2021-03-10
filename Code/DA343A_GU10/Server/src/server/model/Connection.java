@@ -72,9 +72,7 @@ public class Connection {
                     logger.info(message.getSender() + " sent a message");
                 }
             } catch (IOException e){
-                e.printStackTrace();
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -95,25 +93,23 @@ public class Connection {
                     System.out.println("Object received from user not instance of User");
                 }
 
+
                 while (true){
+                    System.out.println("Waiting for object from : " + user.getName());
                     Object message = inputStream.readObject();
 
                     if (message instanceof Message){
                         connectionController.messageReceived((Message) message);
 
-                        //TODO vi kommer ha en variabel sen med user s[ vi slipper g;ra dtta
-                        User[] users = ((Message) message).getReceivers();
-
-                        for (User user : users) {
-                            logger.info(user + " received a message");
-
+                        for (User user : ((Message) message).getReceivers()) {
+                            logger.info(user.getName() + " received a message"); //Denna loggar received 'ven p[ offline som ej tar emot
                         }
+
                     }
 
                 }
 
             } catch (Exception e){
-                e.printStackTrace();
                 System.out.println("user disconected");
                 connectionController.disconnected(user);
             }

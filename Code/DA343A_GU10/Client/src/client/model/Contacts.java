@@ -55,7 +55,7 @@ public class Contacts {
 
     public boolean writeContactsToFile() {
         System.out.println("writing contacts");
-        String filepath = "files/contact_list_" + user.getName() + ".dat";
+        String filepath = "Code/DA343A_GU10/files/contact_list_" + user.getName() + ".dat";
         boolean contactsSaved = false;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath))) {
@@ -69,14 +69,14 @@ public class Contacts {
             contactsSaved = true;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("no contacts moving on");
         }
 
         return contactsSaved;
     }
   
     public void readContactsFromFile() {
-        String filepath = "files/contact_list_" + user.getName() + ".dat";
+        String filepath = "Code/DA343A_GU10/files/contact_list_" + user.getName() + ".dat";
         User readContact;
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath))) {
@@ -88,7 +88,7 @@ public class Contacts {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("no contacts list, moving on");
         }
             return;
     }

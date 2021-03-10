@@ -7,13 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 public class LoggerUI {
-
-    public LoggerUI() {
-
-    }
-
 
     public void printRawLogFile(String filepath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
@@ -116,6 +112,40 @@ public class LoggerUI {
             if (eventDate.after(startDate) && eventDate.before(endDate)) {
                 System.out.println(eventDate + " - " + eventArr[1]);
             }
+        }
+    }
+
+    public void listenForInput() {
+        Scanner scanner = new Scanner(System.in);
+        String userInput = null;
+        String startDate = null;
+        String endDate = null;
+        int inputNumber = 0;
+
+        while (true) {
+            System.out.println("Enter 1 to show the log");
+            userInput = scanner.nextLine();
+
+            try {
+                inputNumber = Integer.parseInt(userInput);
+
+                if (inputNumber == 1) {
+                    System.out.println("Enter the start date of the logs you want to see in the following format");
+                    System.out.println("YYYY/MM/DD-HH:MM   -  Where HH is hour and MM is minute");
+                    startDate = scanner.nextLine();
+                    System.out.println("Enter the end date of the logs you want to see in the following format");
+                    System.out.println("YYYY/MM/DD-HH:MM   -  Where HH is hour and MM is minute");
+                    endDate = scanner.nextLine();
+
+                    readLogFile("Code/DA343A_GU10/files/TrafficLog.log", startDate, endDate);
+
+                } else {
+                    System.out.println("Try again");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Try again");
+            }
+
         }
     }
 

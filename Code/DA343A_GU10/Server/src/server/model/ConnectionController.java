@@ -33,10 +33,10 @@ public class ConnectionController extends Thread {
             logger.addHandler(fh);
 
             serverSocket = new ServerSocket(port);
+            start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        start();
     }
 
     public void registerMessageListener(MessageListener listener){

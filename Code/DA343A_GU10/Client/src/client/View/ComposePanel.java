@@ -7,11 +7,13 @@ public class ComposePanel extends JPanel {
 
     JTextArea textArea;
 
+    ImageIcon messageIcon = null;
+
     ComposePanel(){
         setPreferredSize(new Dimension(500,Integer.MAX_VALUE));
 
         textArea = new JTextArea(1,1);
-        textArea.setPreferredSize(new Dimension(400,Integer.MAX_VALUE));
+        textArea.setPreferredSize(new Dimension(400,800));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
@@ -20,5 +22,15 @@ public class ComposePanel extends JPanel {
 
     public String getTextFromTextArea() {
         return textArea.getText();
+    }
+
+    public void attatchImage(ImageIcon icon) {
+        messageIcon = icon;
+    }
+
+    public ImageIcon getImage() {
+        ImageIcon retImg = messageIcon;
+        messageIcon = null;
+        return retImg;
     }
 }
