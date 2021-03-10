@@ -26,7 +26,7 @@ public class ReadPanelItem extends JPanel {
 
         nameTimeLabel = new JLabel(nameTime);
         add(nameTimeLabel);
-        
+
         imgLabel = new JLabel(img);
         messageLabel = new JLabel(msg);
         imgLabel.setPreferredSize(new Dimension(200,200));
@@ -54,7 +54,6 @@ public class ReadPanelItem extends JPanel {
             add(imgLabel);
             add(messageLabel);
         }
-
 
         setBorder(BorderFactory.createBevelBorder(1));
 

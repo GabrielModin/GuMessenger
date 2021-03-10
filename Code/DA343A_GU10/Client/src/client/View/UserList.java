@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class UserList extends JPanel implements ActionListener {
 
@@ -14,6 +15,7 @@ public class UserList extends JPanel implements ActionListener {
     JScrollPane scrollPane;
     JPanel userItemPanel;
     ArrayList<UserListItem> userListItems = new ArrayList<>();
+
 
     UserList(GUI gui){
         setPreferredSize(new Dimension(500,1080/6));
@@ -43,10 +45,16 @@ public class UserList extends JPanel implements ActionListener {
 
     public void reset() {
         numUsers = 0;
-        for (Component component: userItemPanel.getComponents()) {
+        for (Component component : userItemPanel.getComponents()) {
+            if (component instanceof UserListItem){
+                UserListItem uli = (UserListItem) component;
+                uli.setIsSelected(false);
+                userListItems.remove(uli);
+            }
             userItemPanel.remove(component);
         }
-
+        revalidate();
+        repaint();
     }
 
     @Override

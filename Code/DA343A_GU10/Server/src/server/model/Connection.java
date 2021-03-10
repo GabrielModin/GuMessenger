@@ -95,7 +95,7 @@ public class Connection {
 
 
                 while (true){
-                    System.out.println("Waiting for object from : " + user.getName());
+
                     Object message = inputStream.readObject();
 
                     if (message instanceof Message){

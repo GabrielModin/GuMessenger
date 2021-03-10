@@ -29,7 +29,7 @@ public class ConnectionController extends Thread {
         registerMessageListener(connectionManager.getMessageListener());
 
         try {
-            fh = new FileHandler("Code/DA343A_GU10/files/TrafficLog.log");
+            fh = new FileHandler("files/TrafficLog.log");
             logger.addHandler(fh);
 
             serverSocket = new ServerSocket(port);

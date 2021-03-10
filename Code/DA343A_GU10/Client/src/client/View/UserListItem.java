@@ -51,4 +51,8 @@ public class UserListItem extends JPanel {
     public boolean isChecked() {
         return selected.isSelected();
     }
+
+    public void setIsSelected(boolean b) {
+        selected.setSelected(b);
+    }
 }

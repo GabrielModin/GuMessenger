@@ -9,6 +9,8 @@ public class Contacts {
     User user;
     LinkedList<User> contacts;
     LinkedList<User> fullUserList;
+    LinkedList<User> temp = null;
+    Message lastUserListFromServer;
 
     public Contacts(User user) {
         this.user = user;
@@ -16,13 +18,26 @@ public class Contacts {
         readContactsFromFile();
     }
 
+    public void addTemporaryUserItem(User sender) {
+        createFullUserList(sender);
+    }
+
     public void createFullUserList(Message message){
+        lastUserListFromServer = message;
+        createFullUserList();
+    }
+
+    private void createFullUserList(User sender) {
+        if(temp == null) temp = new LinkedList<>();
+        temp.add(sender);
+        createFullUserList();
+    }
+
+    public void createFullUserList(){
         fullUserList = new LinkedList<>();
         System.out.println("creating full user list");
 
-
-
-        for (User receiver: message.getReceivers()) {
+        for (User receiver: lastUserListFromServer.getReceivers()) {
             if (receiver != user){
                 receiver.setOnline(true);
                 fullUserList.add(receiver);
@@ -37,20 +52,33 @@ public class Contacts {
             }
         }
 
+        if(temp != null){
+            for (User tempUser: temp) {
+                if (!(fullUserList.contains(tempUser))){
+                    System.out.println("adding temp user yo");
+                    fullUserList.add(tempUser);
+                }
+            }
+        }
+
         fullUserList.remove(user);
 
     }
 
     public void addContact(User user) {
-        if(user != null)
+        if(user != null && !(contacts.contains(user))) {
             contacts.add(user);
-        writeContactsToFile();
+            writeContactsToFile();
+        } else System.out.println("contact : " + user.getName() + " already in contacts");
     }
 
     public void removeContact(User user) {
-        if(user != null) {
+        System.out.println("removing contact");
+        if(user != null && (contacts.contains(user))) {
             contacts.remove(user);
-        }
+            writeContactsToFile();
+            createFullUserList();
+        } else System.out.println("no contact : " + user.getName() + " in contacts");
     }
 
     public boolean writeContactsToFile() {
@@ -62,6 +90,7 @@ public class Contacts {
             oos.writeInt(contacts.size());
 
             for (User contact : contacts) {
+                System.out.println(contact.getName());
                 oos.writeObject(contact);
                 oos.flush();
             }
@@ -74,7 +103,7 @@ public class Contacts {
 
         return contactsSaved;
     }
-  
+
     public void readContactsFromFile() {
         String filepath = "files/contact_list_" + user.getName() + ".dat";
         User readContact;
@@ -93,7 +122,7 @@ public class Contacts {
             return;
     }
 
-  
+
     public User[] getSelected(int[] receiverIndex) {
 
         User[] receivers = new User[receiverIndex.length];
@@ -103,7 +132,6 @@ public class Contacts {
         return receivers;
 
     }
-
     public String toString() {
         return "hajsan :)";
     }
@@ -112,4 +140,7 @@ public class Contacts {
         return fullUserList.toArray(new User[0]);
     }
 
+    public boolean contains(User user){
+        return fullUserList.contains(user);
+    }
 }

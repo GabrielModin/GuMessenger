@@ -1,6 +1,7 @@
 package client.View;
 
 import client.controller.MessageClient;
+import shared.User;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -79,6 +80,10 @@ public class GUI extends JFrame implements ActionListener {
         messageClient.addSelectedUsersToContacts(userList.getSelected());
     }
 
+    private void removeSelectedUsersFromContacts() {
+        messageClient.removeSelectedUsersFromContacts(userList.getSelected());
+    }
+
     public String getTextFromCompose(){
         return composePanel.getTextFromTextArea();
     }
@@ -119,8 +124,11 @@ public class GUI extends JFrame implements ActionListener {
             case "Send":
                 sendMessage();
                 break;
-            case "Add to contacts":
+            case "Add":
                 addSelectedUsersToContacts();
+                break;
+            case "Remove":
+                removeSelectedUsersFromContacts();
                 break;
             default:
                 System.out.println("wöpsidajsy");
@@ -134,4 +142,7 @@ public class GUI extends JFrame implements ActionListener {
         messageClient.sendMessage(text, image, receiverIndex);
     }
 
+    public void newMessageNotification(String sender) {
+        buttonPanelSouth.newMessageNotification(sender);
+    }
 }
