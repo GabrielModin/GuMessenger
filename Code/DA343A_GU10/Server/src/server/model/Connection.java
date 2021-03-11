@@ -5,6 +5,7 @@ import shared.Message;
 import shared.User;
 
 import java.io.*;
+import java.net.DatagramSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
 
@@ -13,13 +14,16 @@ public class Connection {
     private Send send;
     private Receive receive;
     private User user;
+
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
+
     private Socket socket;
     private ConnectionController connectionController;
+
     private Logger logger;
 
-    public Connection(Socket socket, ConnectionController connectionController, Logger logger) {
+    public Connection(Socket socket, ConnectionController connectionController, Logger logger){
         this.socket = socket;
         this.connectionController = connectionController;
         this.logger = logger;
@@ -37,6 +41,7 @@ public class Connection {
 
         send.start();
         receive.start();
+
     }
 
     public void sendMessage(Message message){
@@ -47,7 +52,12 @@ public class Connection {
         return this;
     }
 
-    private class Send extends Thread {
+    public Socket getSocket() {
+        return socket;
+    }
+
+    private class Send extends Thread{
+
         private Buffer<Message> messageBuffer = new Buffer<>();
 
         public void sendMessage(Message message){
@@ -61,45 +71,52 @@ public class Connection {
                     Message message = messageBuffer.get();
                     outputStream.writeObject(message);
                     outputStream.flush();
-
-                    logger.info(user.getName() + " received a message from " + message.getSender());
+                    logger.info(user.getName() + " received a message from : " + message.getSender()); //Denna loggar received 'ven p[ offline som ej tar emot
                 }
-            } catch (IOException | InterruptedException e){
+            } catch (IOException e){
+            } catch (InterruptedException e) {
             }
         }
     }
 
-    class Receive extends Thread {
+    class Receive extends Thread{
 
         @Override
         public void run() {
             try{
+
                 Object object = inputStream.readObject();
 
                 if (object instanceof User){
                     user = (User) object;
                     connectionController.connectionReceived(user , getConnection());
-                    logger.info(user.getName() + " connected");
+                    System.out.println(user.getName());
                 } else {
-                    return;
+                    System.out.println("Object received from user not instance of User");
                 }
 
+                logger.info(user.getName() + " connected to server");
+
                 while (true){
+
                     Object message = inputStream.readObject();
 
                     if (message instanceof Message){
-                        Message msg = (Message) message;
-                        connectionController.messageReceived(msg);
+                        Message sentMessage = (Message) message;
+                        connectionController.messageReceived(sentMessage);
 
-                        logger.info(msg.getSender() + " sent a message to " + user.getName());
+                        for (User receiver : ((Message) message).getReceivers()) {
+                            logger.info(sentMessage.getSender() + " sent a message to : " + receiver.getName() );
+                        }
 
-                    } else {
-                        return;
                     }
+
                 }
+
             } catch (Exception e){
-                logger.info(user.getName() + " disconnected");
+                logger.info(user.getName() + " disconnected from server");
                 connectionController.disconnected(user);
+
             }
         }
     }

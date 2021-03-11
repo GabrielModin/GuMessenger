@@ -73,7 +73,6 @@ public class Connection {
                 }
 
             } catch (Exception e) {
-                System.out.println("disconnected");
             }
         }
     }

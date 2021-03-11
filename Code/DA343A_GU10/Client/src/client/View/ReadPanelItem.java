@@ -49,7 +49,7 @@ public class ReadPanelItem extends JPanel {
 
         imgLabel.setPreferredSize(new Dimension(200,200));
         imgLabel.setMaximumSize(new Dimension(200,200));
-        imgLabel.setIcon(scaleImage(img));
+        imgLabel.setIcon(img);
 
         if (img!=null && msg==null){
             setPreferredSize(new Dimension(width,200));
@@ -79,12 +79,4 @@ public class ReadPanelItem extends JPanel {
         setBorder(BorderFactory.createBevelBorder(1));
 
     }
-
-    public ImageIcon scaleImage(ImageIcon imageIcon){
-        Image image = imageIcon.getImage();
-        Image imageScaled = image.getScaledInstance(200,200,Image.SCALE_SMOOTH);
-        return new ImageIcon(imageScaled);
-
-    }
-
 }
