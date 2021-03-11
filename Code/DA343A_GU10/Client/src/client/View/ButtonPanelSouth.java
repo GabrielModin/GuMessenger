@@ -1,7 +1,5 @@
 package client.View;
 
-import shared.User;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +9,7 @@ public class ButtonPanelSouth extends JPanel {
     private JLabel currentUserIcon;
     private JLabel messageNotification;
 
-    ButtonPanelSouth(GUI gui){
+    public ButtonPanelSouth(GUI gui){
         BorderLayout layout = new BorderLayout();
         setLayout(layout);
 

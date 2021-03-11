@@ -8,7 +8,7 @@ public class ComposePanel extends JPanel {
     private JTextArea textArea;
     private ImageIcon messageIcon = null;
 
-    ComposePanel(){
+    public ComposePanel(){
         setPreferredSize(new Dimension(500,Integer.MAX_VALUE));
 
         textArea = new JTextArea(1,1);

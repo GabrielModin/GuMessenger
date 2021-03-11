@@ -5,19 +5,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 
 public class UserList extends JPanel implements ActionListener {
 
-    private BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
     private int numUsers = 0;
     private GUI gui;
+    private ArrayList<UserListItem> userListItems = new ArrayList<>();
+    private BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
     private JScrollPane scrollPane;
     private JPanel userItemPanel;
-    private ArrayList<UserListItem> userListItems = new ArrayList<>();
 
+    public UserList(GUI gui){
+        this.gui = gui;
 
-    UserList(GUI gui){
         setPreferredSize(new Dimension(500,1080/6));
         setBackground(Color.BLACK);
         setLayout(layout);
@@ -28,8 +29,6 @@ public class UserList extends JPanel implements ActionListener {
         userItemPanel.setLayout(userItemPanelLayout);
         scrollPane = new JScrollPane(userItemPanel);
         add(scrollPane);
-
-        this.gui = gui;
     }
 
     public void addUserToOnlineList(String user, ImageIcon icon, boolean online) {
@@ -70,7 +69,9 @@ public class UserList extends JPanel implements ActionListener {
                 uli.add(item);
             }
         }
+
         int[] selectedUsers = new int[uli.size()];
+
         for (int i = 0; i < selectedUsers.length; i++) {
             selectedUsers[i] = uli.get(i).getIndex();
         }

@@ -1,7 +1,6 @@
 package client.View;
 
 import client.controller.MessageClient;
-import shared.User;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -27,7 +26,7 @@ public class GUI extends JFrame implements ActionListener {
         this.messageClient = messageClient;
 
         userList = new UserList(this);
-        readPanel = new ReadPanel(this);
+        readPanel = new ReadPanel();
         composePanel = new ComposePanel();
         buttonPanelSouth = new ButtonPanelSouth(this);
 

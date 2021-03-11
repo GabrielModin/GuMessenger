@@ -5,7 +5,7 @@ import shared.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+
 
 public class ConnectionManager implements ConnectionListener {
     private HashMap<User, Connection> connections = new HashMap<>();
@@ -17,7 +17,6 @@ public class ConnectionManager implements ConnectionListener {
 
     @Override
     public void newConnection(User user, Connection connection) {
-
         connections.remove(user);
         connections.put(user,connection);
 
@@ -27,7 +26,6 @@ public class ConnectionManager implements ConnectionListener {
     }
 
     private void sendUserList() {
-        User[] users = connections.keySet().toArray(new User[0]);
         Message userList;
 
         ArrayList<User> receivers = new ArrayList<>();
@@ -58,10 +56,9 @@ public class ConnectionManager implements ConnectionListener {
     }
 
     public void connectionClosed(User user) {
-        System.out.println("removed : " + user.getName());
         connections.remove(user);
         connections.put(user,null);
-        System.out.println("Sending revised user list");
+
         sendUserList();
     }
 }

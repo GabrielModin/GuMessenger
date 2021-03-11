@@ -2,17 +2,14 @@ package client.View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class ReadPanel extends JPanel {
 
     private BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
-
-    private GUI gui;
     private JScrollPane scrollPane;
     private JPanel readPanelItem;
 
-    ReadPanel(GUI gui){
+    public ReadPanel(){
         setPreferredSize(new Dimension(450,800));
         setBackground(Color.BLACK);
         setLayout(layout);
@@ -23,11 +20,7 @@ public class ReadPanel extends JPanel {
         readPanelItem.setLayout(userItemPanelLayout);
         scrollPane = new JScrollPane(readPanelItem);
 
-
-
         add(scrollPane);
-
-        this.gui = gui;
     }
 
     public void addMessage(String name, String messageText, ImageIcon messageIcon, String timeStamp) {
@@ -39,7 +32,6 @@ public class ReadPanel extends JPanel {
     }
 
     public void reset() {
-
         for (Component component: readPanelItem.getComponents()) {
             readPanelItem.remove(component);
         }

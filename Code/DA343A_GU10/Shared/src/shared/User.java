@@ -5,11 +5,12 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    final static long serialVersionUID = 1L;
+    private final static long serialVersionUID = 1L;
 
-    String name;
-    ImageIcon img;
-    boolean isOnline;
+    private String name;
+    private ImageIcon img;
+    private boolean isOnline;
+
     public User(String name, ImageIcon img){
         this.name = name;
         this.img = img;

@@ -24,36 +24,6 @@ public class LoggerUI {
             e.printStackTrace();
         }
     }
-
-    public void readLogFile(String filepath) {
-        String logMessage = null;
-        String millis = null;
-        ArrayList<String> logs = new ArrayList<>();
-
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-            String logRow = br.readLine();
-
-            while (logRow != null) {
-                if (logRow.contains("<millis>")) {
-                    millis = logRow.substring(10, 23);
-                }
-
-                if (logRow.contains("<message>")) {
-                    String message = logRow.substring(11);
-                    String[] messageSplit = message.split("<");
-                    logMessage = millis + "," + messageSplit[0];
-
-                    logs.add(logMessage);
-                }
-
-                logRow = br.readLine();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     
     //Date in format YYYY/MM/DD-HH:MM
     public void readLogFile(String filepath, String inputStartDate, String inputEndDate) {
@@ -140,8 +110,6 @@ public class LoggerUI {
 
         }
     }
-
-
 
     public static void main(String[] args) {
         LoggerUI loggerUI = new LoggerUI();

@@ -1,12 +1,14 @@
-package server.model;
+package server.controller;
 
+import server.model.Connection;
+import server.model.ConnectionListener;
+import server.model.ConnectionManager;
+import server.model.MessageListener;
 import shared.Message;
 import shared.User;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -19,7 +21,6 @@ public class ConnectionController extends Thread {
 
     private FileHandler fh;
     private Logger logger = Logger.getLogger(Connection.class.getName());
-
 
     public ConnectionController(int port) {
 

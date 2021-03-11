@@ -5,37 +5,36 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Message implements Serializable {
-
     private ImageIcon img = null;
     private String message = null;
     private Date timestamp = new Date();
     private User sender = null;
     private User[] receivers;
 
-    private Message(User sender, User[] receivers){
+    private Message(User sender, User[] receivers) {
         this.sender = sender;
         this.receivers = receivers;
     }
 
-    public Message(User sender, User[] receivers, String message, ImageIcon img){
+    public Message(User sender, User[] receivers, String message, ImageIcon img) {
         this(sender, receivers);
         this.message = message;
         this.img = img;
     }
 
-    public Message(User sender, User[] receivers, String message){
+    public Message(User sender, User[] receivers, String message) {
         this(sender, receivers);
         this.message = message;
         this.img = null;
     }
 
-    public Message(User sender, User[] receivers, ImageIcon img){
+    public Message(User sender, User[] receivers, ImageIcon img) {
         this(sender, receivers);
         this.img = img;
         this.message = null;
     }
 
-    public Message(User[] receivers){
+    public Message(User[] receivers) {
         this(null, receivers);
         setMessage("contactList");
     }
@@ -80,5 +79,4 @@ public class Message implements Serializable {
     public void setReceivers(User[] receivers) {
         this.receivers = receivers;
     }
-
 }

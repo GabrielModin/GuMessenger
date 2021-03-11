@@ -3,7 +3,6 @@ package client.model;
 import client.controller.MessageClient;
 import shared.Message;
 import shared.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,6 +47,7 @@ public class MessageManager implements MessageListener{
             if(!messageMap.containsKey(receiver)){
                 messageMap.put(receiver, new ArrayList<>());
             }
+
             ArrayList<Message> temp = messageMap.get(receiver);
             temp.add(sentMessage);
             messageMap.put(receiver, temp);

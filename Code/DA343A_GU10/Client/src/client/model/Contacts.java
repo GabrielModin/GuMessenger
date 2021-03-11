@@ -35,7 +35,6 @@ public class Contacts {
 
     public void createFullUserList(){
         fullUserList = new LinkedList<>();
-        System.out.println("creating full user list");
 
         for (User receiver: lastUserListFromServer.getReceivers()) {
             if (receiver != user){
@@ -55,7 +54,6 @@ public class Contacts {
         if(temp != null){
             for (User tempUser: temp) {
                 if (!(fullUserList.contains(tempUser))){
-                    System.out.println("adding temp user yo");
                     fullUserList.add(tempUser);
                 }
             }
@@ -68,22 +66,19 @@ public class Contacts {
         if(user != null && !(contacts.contains(user))) {
             contacts.add(user);
             writeContactsToFile();
-        } else System.out.println("contact : " + user.getName() + " already in contacts");
+        }
     }
 
     public void removeContact(User user) {
-        System.out.println("removing contact");
         if(user != null && (contacts.contains(user))) {
             contacts.remove(user);
             writeContactsToFile();
             createFullUserList();
-        } else System.out.println("no contact : " + user.getName() + " in contacts");
+        }
     }
 
-    public boolean writeContactsToFile() {
-        System.out.println("writing contacts");
+    public void writeContactsToFile() {
         String filepath = "Code/DA343A_GU10/files/contact_list_" + user.getName() + ".dat";
-        boolean contactsSaved = false;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath))) {
             oos.writeInt(contacts.size());
@@ -94,13 +89,9 @@ public class Contacts {
                 oos.flush();
             }
 
-            contactsSaved = true;
-
         } catch (IOException e) {
-            System.out.println("no contacts moving on");
+            System.out.println("No contacts moving on");
         }
-
-        return contactsSaved;
     }
 
     public void readContactsFromFile() {
@@ -116,22 +107,18 @@ public class Contacts {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("no contacts list, moving on");
+            System.out.println("No contacts list, moving on");
         }
     }
 
 
     public User[] getSelected(int[] receiverIndex) {
-
         User[] receivers = new User[receiverIndex.length];
+
         for (int i = 0; i < receiverIndex.length; i++) {
             receivers[i] = fullUserList.get(receiverIndex[i]);
         }
         return receivers;
-    }
-
-    public String toString() {
-        return "hajsan :)";
     }
 
     public User[] getUsers() {

@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Connection {
-
     private Socket socket;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
@@ -17,7 +16,7 @@ public class Connection {
     private Receive receive;
     private MessageListener listener;
 
-    public Connection(String ipAddress, int port, User user) throws IOException{
+    public Connection(String ipAddress, int port, User user) throws IOException {
         this.socket = new Socket(ipAddress, port);
         this.user = user;
 
@@ -40,9 +39,7 @@ public class Connection {
         send.addToBuffer(message);
     }
 
-
     class Send extends Thread {
-
         Buffer<Message> messageBuffer = new Buffer<>();
 
         public void addToBuffer(Message message){
@@ -52,7 +49,6 @@ public class Connection {
         @Override
         public void run() {
             try {
-
                 oos.writeObject(user);
                 oos.flush();
 
@@ -64,16 +60,13 @@ public class Connection {
                 e.printStackTrace();
             } catch (InterruptedException e) {
             }
-
         }
     }
 
     class Receive extends Thread {
-
         @Override
         public void run() {
             try {
-
                 while (true) {
                     Message msgReceived = (Message) ois.readObject();
                     listener.messageReceived(msgReceived);
