@@ -98,7 +98,7 @@ public class Connection {
                     }
                 }
             } catch (Exception e){
-                logger.info(user.getName() + "disconnected");
+                logger.info(user.getName() + " disconnected");
                 connectionController.disconnected(user);
             }
         }
